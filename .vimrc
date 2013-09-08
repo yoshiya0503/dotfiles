@@ -1,4 +1,10 @@
 "-----------------------------------------------------------------
+"@title My .vimrc 
+"@author Yoshiya Ito
+"@version 1.2
+"-----------------------------------------------------------------
+
+"-----------------------------------------------------------------
 "neobundle.vim header
 "-----------------------------------------------------------------
 
@@ -19,16 +25,21 @@ NeoBundle "Shougo/neosnippet" "code snipets
 NeoBundle "honza/vim-snippets" "code snipets
 NeoBundle "davidhalter/jedi-vim" 
 NeoBundle "Shougo/vimshell.git" "shell of vim
+NeoBundle "thinca/vim-quickrun" "quick run
 NeoBundle "bling/vim-airline" "airline of status bar
+NeoBundle "scrooloose/nerdtree" "nerdtree 
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
+NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
+NeoBundle "leshill/vim-json" "json syntax
+NeoBundle "digitaltoad/vim-jade" "jade syntax
+NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
+NeoBundle "itchyny/landscape.vim" "color scheme 2
 "-----------------------------------------------------------------
 "neobundle.vim hooter
 "-----------------------------------------------------------------
 filetype plugin indent on     " required!
 filetype indent on
-syntax on
-
 "-----------------------------------------------------------------
 "original vim setting file
 "-----------------------------------------------------------------
@@ -44,8 +55,6 @@ set laststatus=2
 set nowritebackup
 "cahnge to normal mode
 inoremap <silent> jj <esc>
-"colorscheme
-colorscheme molokai
 "indent tab
 set autoindent
 set smartindent
@@ -55,14 +64,30 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set smartindent
+set showmatch
+set showcmd
 "-----------------------------------------------------------------
-"other color 
+"color setting
 "-----------------------------------------------------------------
-"line color
-highlight LineNr ctermfg=226
+"syntax hilight
+syntax on
+"colorscheme
+"colorscheme molokai need for
+"http://fixture.jp/blog/2012/08/patch-to-disable-molokai-bgcolor/
+colorscheme molokai
+"colorscheme landscape
+"airline color
+let g:airline_theme = 'dark'
 "status line
 set t_Co=256
-
+"line color
+highlight LineNr ctermfg=226
+"row
+set cursorline 
+hi CursorLine ctermbg=102
+"virtical
+set cursorcolumn
+hi CursorColumn ctermbg=102
 "-----------------------------------------------------------------
 "neocomplecache
 "-----------------------------------------------------------------
@@ -80,6 +105,16 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "neosnippet
 "-----------------------------------------------------------------
 "Plugin key-mappings.
-set conceallevel=2 concealcursor=i "enable neosnippet
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"set conceallevel=2 concealcursor=i "enable neosnippet
+"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+"-----------------------------------------------------------------
+"nerdtree
+"-----------------------------------------------------------------
+"auto mode
+autocmd vimenter * NERDTree
+"display hidden file
+"let g:NERDTreeShowHidden=1
+"tree style
+let g:NERDTreeDirArrows=0
