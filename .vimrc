@@ -1,7 +1,7 @@
 "-----------------------------------------------------------------
 "@title My .vimrc 
 "@author Yoshiya Ito
-"@version 1.2
+"@version 2.0
 "-----------------------------------------------------------------
 
 "-----------------------------------------------------------------
@@ -28,13 +28,17 @@ NeoBundle "Shougo/vimshell.git" "shell of vim
 NeoBundle "thinca/vim-quickrun" "quick run
 NeoBundle "bling/vim-airline" "airline of status bar
 NeoBundle "scrooloose/nerdtree" "nerdtree 
+NeoBundle "majutsushi/tagbar" "tagbar
+NeoBundle 'klen/python-mode' "python syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
+NeoBundle 'pangloss/vim-javascript' "javascript syntax
 NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
 NeoBundle "leshill/vim-json" "json syntax
 NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
 NeoBundle "itchyny/landscape.vim" "color scheme 2
+NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
 "-----------------------------------------------------------------
 "neobundle.vim hooter
 "-----------------------------------------------------------------
@@ -53,6 +57,8 @@ set ruler
 set laststatus=2
 "no backup
 set nowritebackup
+"no swap
+set noswapfile
 "cahnge to normal mode
 inoremap <silent> jj <esc>
 "indent tab
@@ -63,9 +69,27 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
-set smartindent
 set showmatch
 set showcmd
+"show hex
+set display=uhex
+"scroll speed up?
+set lazyredraw
+set ttyfast
+"use clipbord
+"set clipboard=unnamed,autoselect
+
+"----------------------------------------------------------------
+"key remap for ()
+"----------------------------------------------------------------
+imap {} {}<Left>
+imap [] []<Left>
+imap () ()<Left>
+imap "" ""<Left>
+imap '' ''<Left>
+imap <> <><Left>
+imap // //<left>
+imap /// ///<left>
 "-----------------------------------------------------------------
 "color setting
 "-----------------------------------------------------------------
@@ -76,6 +100,8 @@ syntax on
 "http://fixture.jp/blog/2012/08/patch-to-disable-molokai-bgcolor/
 colorscheme molokai
 "colorscheme landscape
+"colorscheme solarized
+"set background=dark
 "airline color
 let g:airline_theme = 'dark'
 "status line
@@ -83,11 +109,11 @@ set t_Co=256
 "line color
 highlight LineNr ctermfg=226
 "row
-set cursorline 
-hi CursorLine ctermbg=102
+"set cursorline 
+"hi CursorLine ctermbg=102
 "virtical
-set cursorcolumn
-hi CursorColumn ctermbg=102
+"set cursorcolumn
+"hi CursorColumn ctermbg=102
 "-----------------------------------------------------------------
 "neocomplecache
 "-----------------------------------------------------------------
@@ -115,6 +141,24 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "auto mode
 autocmd vimenter * NERDTree
 "display hidden file
-"let g:NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=1
 "tree style
 let g:NERDTreeDirArrows=0
+"tree width
+let NERDTreeWinSize=20
+
+"-----------------------------------------------------------------
+"pymode 
+"-----------------------------------------------------------------
+"folding method and class
+let g:pymode_folding = 0
+"show document so slow...
+let g:pymode_doc = 0
+"refactoring tool so slow...
+let g:pymode_rope = 0
+
+"-----------------------------------------------------------------
+"tag bar
+"-----------------------------------------------------------------
+"open tagbar
+nmap <F2> :TagbarToggle<CR>
