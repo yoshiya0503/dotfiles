@@ -78,7 +78,8 @@ set lazyredraw
 set ttyfast
 "use clipbord
 "set clipboard=unnamed,autoselect
-
+"backspace enable for vim 7.4
+set bs=start
 "----------------------------------------------------------------
 "key remap for ()
 "----------------------------------------------------------------
@@ -88,6 +89,7 @@ imap () ()<Left>
 imap "" ""<Left>
 imap '' ''<Left>
 imap <> <><Left>
+<<<<<<< HEAD
 imap // //<left>
 imap /// ///<left>
 
@@ -154,19 +156,41 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeDirArrows=0
 "tree width
 let NERDTreeWinSize=20
-
+"-----------------------------------------------------------------
+"jedi-vim
+"-----------------------------------------------------------------
+let g:jedi#completions_enabled=1
+let g:jedi#popup_on_dot = 0
+"let g:jedi#auto_initialization=0
+"let g:jedi#popup_select_first=0
+"-----------------------------------------------------------------
+"jedi and neocomplcache combination
+"-----------------------------------------------------------------
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#auto_vim_configuration = 0
+if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 "-----------------------------------------------------------------
 "pymode 
 "-----------------------------------------------------------------
 "folding method and class
 let g:pymode_folding = 0
 "show document so slow...
-let g:pymode_doc = 0
+let g:pymode_doc=0
+"code comletion
+let g:pymode_rope_complete_on_dot=0
+let g:pymode_rope_completion=0
 "refactoring tool so slow...
 let g:pymode_rope = 0
-
 "-----------------------------------------------------------------
 "tag bar
 "-----------------------------------------------------------------
 "open tagbar
 nmap <F2> :TagbarToggle<CR>
+"tagbar width
+let g:tagbar_width = 20
+"auto open tagbar
+"autocmd filetype * nested :call tagbar#autoopen(1)
+autocmd FileType * nested :call tagbar#autoopen(0)
