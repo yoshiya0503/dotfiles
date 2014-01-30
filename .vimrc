@@ -33,6 +33,7 @@ NeoBundle 'klen/python-mode' "python syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle 'pangloss/vim-javascript' "javascript syntax
 NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
+NeoBundle 'jiangmiao/simple-javascript-indenter' "simple javascript indent
 NeoBundle "leshill/vim-json" "json syntax
 NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
@@ -89,9 +90,8 @@ imap () ()<Left>
 imap "" ""<Left>
 imap '' ''<Left>
 imap <> <><Left>
-<<<<<<< HEAD
-imap // //<left>
-imap /// ///<left>
+"imap // //<left>
+"imap /// ///<left>
 
 "-----------------------------------------------------------------
 "high speed cursor in keyRemap4Mac
