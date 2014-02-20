@@ -7,7 +7,7 @@
 "-----------------------------------------------------------------
 "neobundle.vim header
 "-----------------------------------------------------------------
-
+let g:neobundle_default_git_protocol='git'
 set nocompatible
 filetype plugin indent off
 
