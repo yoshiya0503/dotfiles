@@ -1,3 +1,23 @@
-dotfiles for startup
+My Vim Enviroment
+========
 
-![screenshot](https://github.com/yoshiya0503/dotfiles/blob/master/screenshot/screenshot.png?row=true)
+build up your vim enviroment using neobundle.
+In addition, my favorite configure of vim (.vimrc) will be put your home directory
+
+Quick Start!
+=======
+    make setup
+
+Update
+======
+    make update
+
+Use
+====
+    vim .vimrc
+    :neoBundleInstall
+   
+
+MIT License.
+
+*Author: Yoshiya Ito <myon53@gmail.com>*
