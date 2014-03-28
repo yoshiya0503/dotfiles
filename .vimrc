@@ -22,6 +22,7 @@ endif
 NeoBundle "Shougo/neocomplcache" "code complete
 NeoBundle "scrooloose/syntastic" "syntax checker
 NeoBundle "Shougo/neosnippet" "code snipets
+NeoBundle "Shougo/neosnippet-snippets" "snipet file
 NeoBundle "honza/vim-snippets" "code snipets
 NeoBundle "davidhalter/jedi-vim" 
 NeoBundle "Shougo/vimshell.git" "shell of vim
@@ -141,10 +142,18 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "neosnippet
 "-----------------------------------------------------------------
 "Plugin key-mappings.
-"set conceallevel=2 concealcursor=i "enable neosnippet
-"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
+" for snippet_complete marker
+if has('conceal')
+    set conceallevel=2 concealcursor=i "enable neosnippet
+endif
+
+"snippet directory
+let g:neosnippet#snippets_directory='~/GitHub/dotfiles/snippets' 
 "-----------------------------------------------------------------
 "nerdtree
 "-----------------------------------------------------------------

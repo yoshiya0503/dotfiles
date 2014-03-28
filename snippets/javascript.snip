@@ -1,0 +1,80 @@
+snippet series
+    async.series([
+        function(${1:next}) {
+            ${1:next();}
+        },
+        function(${1:next}) {
+            ${1:next();}
+        }
+    ],
+    function(err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, {});
+    });
+
+snippet parallel
+    async.parallel([
+        function(${1:next}) {
+            ${2:next();}
+        },
+        function(${3:next}) {
+            ${4:next();}
+        }
+    ],
+    function(err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, {});
+    });
+
+snippet waterfall
+    async.parallel([
+        function(${1:next}) {
+            ${2:next();}
+        },
+        function(${3:next}) {
+            ${4:next();}
+        }
+    ],
+    function(err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, {});
+    });
+
+snippet describe
+    describe('${1:service#function}', function() {
+        it('${2:foo}', function(done) {
+            done();
+        });
+        it('${3:bar}', function(done) {
+            done();
+        })
+    });
+
+snippet it
+    it('${1:hoge}', function(done) {
+        done();
+    });
+
+snippet should
+    should.not.exist(err);
+    should.exist(result);
+
+snippet signature
+    /**
+     * @fileoverview ${1:hoge service}
+     * @name ${2: hoge}
+     * @author Yoshiya Ito <ito_yoshiya@cyberagnet.co.jp>
+     */
+
+snippet jsdoc
+    /**
+     * @method ${1:func}
+     * @param ${2:\{\}} param
+     * @param {Function} callback
+     */
