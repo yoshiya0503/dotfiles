@@ -9,3 +9,4 @@ setup:
 update:
 	git pull
 	cp ./.vimrc ${HOME}
+	cp -rf ./snippets ~/.vim/
