@@ -19,7 +19,7 @@ endif
 "-----------------------------------------------------------------
 "neobundle.vim main module
 "-----------------------------------------------------------------
-NeoBundle "Shougo/neocomplcache" "code complete
+NeoBundle "Shougo/neocomplete" "code complete
 NeoBundle "scrooloose/syntastic" "syntax checker
 NeoBundle "Shougo/neosnippet" "code snipets
 NeoBundle "Shougo/neosnippet-snippets" "snipet file
@@ -42,7 +42,6 @@ NeoBundle "leshill/vim-json" "json syntax
 NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
-NeoBundle "itchyny/landscape.vim" "color scheme 2
 NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
 "-----------------------------------------------------------------
 "neobundle.vim hooter
@@ -114,7 +113,6 @@ syntax on
 "http://fixture.jp/blog/2012/08/patch-to-disable-molokai-bgcolor/
 colorscheme molokai
 let g:rehash256 = 1
-"colorscheme landscape
 "colorscheme solarized
 "set background=dark
 "airline color
@@ -130,15 +128,17 @@ highlight LineNr ctermfg=226
 "set cursorcolumn
 "hi CursorColumn ctermbg=102
 "-----------------------------------------------------------------
-"neocomplecache
+"neocomplete
 "-----------------------------------------------------------------
-let g:neocomplcache_enable_at_startup=1 "enable neocomplechace
-let g:neocomplcache_smartCase = 1 "smart mode
+let g:neocomplete#enable_at_startup=1 "enable neocomplechace
+let g:neocomplete#smartCase = 1 "smart mode
+let g:neocomplete#sources#syntax#min_keyword_length = 3 "key word length
 
 "Enable omni completion. Not required if they are already set elsewhere in .vimrc
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
