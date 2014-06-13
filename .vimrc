@@ -30,6 +30,8 @@ NeoBundle "thinca/vim-quickrun" "quick run
 NeoBundle "bling/vim-airline" "airline of status bar
 NeoBundle "scrooloose/nerdtree" "nerdtree 
 NeoBundle "majutsushi/tagbar" "tagbar
+NeoBundle "vim-jp/cpp-vim" "syntax for c++
+NeoBundle 'octol/vim-cpp-enhanced-highlight' "syntax for c++ enhance
 NeoBundle 'klen/python-mode' "python syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle 'pangloss/vim-javascript' "javascript syntax
@@ -43,6 +45,7 @@ NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
 NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
+NeoBundle 'editorconfig/editorconfig-vim'
 "-----------------------------------------------------------------
 "neobundle.vim hooter
 "-----------------------------------------------------------------
@@ -65,7 +68,8 @@ set nowritebackup
 set noswapfile
 "cahnge to normal mode
 inoremap <silent> jj <esc>
-"indent tab
+"indent
+set cindent
 set autoindent
 set smartindent
 set tabstop=4
@@ -80,6 +84,10 @@ set display=uhex
 "scroll speed up?
 set lazyredraw
 set ttyfast
+
+"c indent setting
+set cinoptions+=:0,g0
+
 "use clipbord
 "set clipboard=unnamed,autoselect
 "backspace enable for vim 7.4
@@ -173,19 +181,21 @@ let NERDTreeWinSize=20
 "jedi-vim
 "-----------------------------------------------------------------
 "jedi is too slow so, comment out this setting
-"let g:jedi#completions_enabled=1
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#auto_initialization=0
+"autocmd FileType python setlocal omnifunc=jedi#completions
+"let g:jedi#popup_on_dot = 1
+"let g:jedi#auto_initialization=1
 "let g:jedi#popup_select_first=0
+"let g:jedi#completions_enabled = 1
+"let g:jedi#auto_vim_configuration = 1
 "-----------------------------------------------------------------
 "jedi and neocomplcache combination
 "-----------------------------------------------------------------
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#auto_vim_configuration = 0
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+"autocmd FileType python setlocal omnifunc=jedi#completions
+"let g:jedi#auto_vim_configuration = 0
+"if !exists('g:neocomplete#force_omni_input_patterns')
+"    let g:neocomplete#force_omni_input_patterns = {}
+"endif
+"let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 "-----------------------------------------------------------------
 "pymode 
 "-----------------------------------------------------------------
