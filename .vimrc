@@ -30,6 +30,7 @@ NeoBundle "thinca/vim-quickrun" "quick run
 NeoBundle "bling/vim-airline" "airline of status bar
 NeoBundle "scrooloose/nerdtree" "nerdtree 
 NeoBundle "majutsushi/tagbar" "tagbar
+"NeoBundle "vim-scripts/java.vim" "java syntax
 NeoBundle "vim-jp/cpp-vim" "syntax for c++
 NeoBundle 'octol/vim-cpp-enhanced-highlight' "syntax for c++ enhance
 NeoBundle 'klen/python-mode' "python syntax
@@ -84,14 +85,25 @@ set display=uhex
 "scroll speed up?
 set lazyredraw
 set ttyfast
-
 "c indent setting
 set cinoptions+=:0,g0
-
 "use clipbord
 "set clipboard=unnamed,autoselect
 "backspace enable for vim 7.4
 set bs=start
+"encoding
+set encoding=utf8
+"hilight search
+set hlsearch
+
+"----------------------------------------------------------------
+"java syntax hilight
+"----------------------------------------------------------------
+let g:java_highlight_all=1
+let g:java_highlight_debug=1
+let g:java_allow_cpp_keywords=1
+let g:java_space_errors=1
+let g:java_highlight_functions=1
 "----------------------------------------------------------------
 "key remap for ()
 "----------------------------------------------------------------
@@ -101,8 +113,6 @@ imap () ()<Left>
 imap "" ""<Left>
 imap '' ''<Left>
 imap <> <><Left>
-"imap // //<left>
-"imap /// ///<left>
 
 "-----------------------------------------------------------------
 "high speed cursor in keyRemap4Mac
@@ -120,15 +130,18 @@ syntax on
 "colorscheme molokai need for
 "http://fixture.jp/blog/2012/08/patch-to-disable-molokai-bgcolor/
 colorscheme molokai
+let g:molokai_original=1
 let g:rehash256 = 1
 "colorscheme solarized
-"set background=dark
+set background=dark
 "airline color
 let g:airline_theme = 'dark'
 "status line
 set t_Co=256
 "line color
 highlight LineNr ctermfg=226
+set cursorline
+hi clear CursorLine
 "row
 "set cursorline 
 "hi CursorLine ctermbg=102
