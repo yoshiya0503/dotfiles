@@ -97,6 +97,22 @@ set encoding=utf8
 set hlsearch
 
 "----------------------------------------------------------------
+"C++ compiler. using clang++ (syntastick, quickrun)
+"----------------------------------------------------------------
+"let g:syntastic_cpp_compiler = 'clang++'
+"let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+"let g:quickrun_config = { 'command': 'clang++','cmdopt': '-std=c++11' }
+if executable("clang++")
+    let g:syntastic_cpp_compiler = 'clang++'
+    let g:syntastic_cpp_compiler_options = '--std=c++11 --stdlib=libc++'
+    let g:quickrun_config = {}
+    let g:quickrun_config['cpp/clang++11'] = {
+                \ 'cmdopt': '--std=c++11 --stdlib=libc++',
+                \ 'type': 'cpp/clang++'
+                \ }
+    let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
+endif
+"----------------------------------------------------------------
 "java syntax hilight
 "----------------------------------------------------------------
 let g:java_highlight_all=1
