@@ -13,7 +13,7 @@ filetype plugin indent off
 
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/bundle/'))
+  call neobundle#begin(expand('~/.vim/bundle/'))
 endif
 
 "-----------------------------------------------------------------
@@ -47,6 +47,8 @@ NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
 NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
 NeoBundle 'editorconfig/editorconfig-vim'
+
+call neobundle#end()
 "-----------------------------------------------------------------
 "neobundle.vim hooter
 "-----------------------------------------------------------------
