@@ -46,14 +46,16 @@ NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
 NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
-NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'editorconfig/editorconfig-vim' "config file syntax
+NeoBundle 'jmcantrell/vim-virtualenv' "python virtulal env
+NeoBundle 'tpope/vim-fugitive' "fugitive
 
-call neobundle#end()
 "-----------------------------------------------------------------
 "neobundle.vim hooter
 "-----------------------------------------------------------------
 filetype plugin indent on     " required!
 filetype indent on
+call neobundle#rc(expand('~/.vim/bundle/'))
 "-----------------------------------------------------------------
 "original vim setting file
 "-----------------------------------------------------------------
@@ -148,7 +150,7 @@ colorscheme molokai
 let g:molokai_original=1
 let g:rehash256 = 1
 "colorscheme solarized
-set background=dark
+"set background=dark
 "airline color
 let g:airline_theme = 'dark'
 "status line
@@ -164,6 +166,25 @@ hi clear CursorLine
 "set cursorcolumn
 "hi CursorColumn ctermbg=102
 "-----------------------------------------------------------------
+"airline
+"-----------------------------------------------------------------
+let g:airline_powerline_fonts = 1
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+
 "neocomplete
 "-----------------------------------------------------------------
 let g:neocomplete#enable_at_startup=1 "enable neocomplechace
@@ -246,7 +267,6 @@ let g:tagbar_width = 20
 "auto open tagbar
 "autocmd filetype * nested :call tagbar#autoopen(1)
 autocmd FileType * nested :call tagbar#autoopen(0)
-
 "------------------------------------------------------------------
 "css and html
 "------------------------------------------------------------------
