@@ -34,6 +34,7 @@ NeoBundle "majutsushi/tagbar" "tagbar
 NeoBundle "vim-jp/cpp-vim" "syntax for c++
 NeoBundle 'octol/vim-cpp-enhanced-highlight' "syntax for c++ enhance
 NeoBundle 'klen/python-mode' "python syntax
+NeoBundle 'vim-ruby/vim-ruby' "ruby syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle 'pangloss/vim-javascript' "javascript syntax
 NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
