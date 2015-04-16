@@ -1,0 +1,42 @@
+snippet signature
+    #! /usr/bin/python
+    # -*- coding: utf-8 -*-
+    """
+    ${1:title}
+    ${2:description}
+    """
+    __author__ = 'Yoshiya Ito <myon53@gmail.com>'
+    __version__ = '0.0.1'
+    __date__ = '${3:day} ${4:month} ${5:year}'
+
+snippet pydoc
+    """
+    ${1:args} -- ${2:description}
+    """
+
+snippet for_range
+    for i in range(${1:start}, ${2:end}):
+
+snippet for_enum
+    for k, v in enumerate(${1:iter}):
+
+snippet comprehension_list
+    [x for x in ${1:iter}]
+
+snippet comprehension_dict
+    {k: v for k, v in ${1:iter}}
+
+snippet comprehension_set
+    {x for x in ${1:iter}}
+
+snippet comprehension_gen
+    (x for x in ${1:iter})
+
+snippet lambda_map
+    map(lambda elem: ${1:expression}, ${2:iter})
+
+snippet lambda_filter
+    filter(lambda elem: ${1:expression}, ${2:iter})
+
+snippet lambda_reduce
+    reduce(lambda result, elem: ${1:expression, ${2:iter}})
