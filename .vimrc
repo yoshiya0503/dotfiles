@@ -1,7 +1,7 @@
 "-----------------------------------------------------------------
 "@title My .vimrc 
 "@author Yoshiya Ito
-"@version 2.0
+"@version 3.0.0
 "-----------------------------------------------------------------
 
 "-----------------------------------------------------------------
@@ -12,13 +12,18 @@ set nocompatible
 filetype plugin indent off
 
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+    if &compatible
+        set nocompatible               " Be iMproved
+    endif
+
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
   call neobundle#begin(expand('~/.vim/bundle/'))
 endif
 
 "-----------------------------------------------------------------
 "neobundle.vim main module
 "-----------------------------------------------------------------
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle "Shougo/neocomplete" "code complete
 NeoBundle "scrooloose/syntastic" "syntax checker
 NeoBundle "Shougo/neosnippet" "code snipets
@@ -48,7 +53,7 @@ NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
 NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
 NeoBundle 'editorconfig/editorconfig-vim' "config file syntax
-NeoBundle 'jmcantrell/vim-virtualenv' "python virtulal env
+"NeoBundle 'jmcantrell/vim-virtualenv' "python virtulal env
 NeoBundle 'tpope/vim-fugitive' "fugitive
 
 "-----------------------------------------------------------------
@@ -56,7 +61,7 @@ NeoBundle 'tpope/vim-fugitive' "fugitive
 "-----------------------------------------------------------------
 filetype plugin indent on     " required!
 filetype indent on
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#end()
 "-----------------------------------------------------------------
 "original vim setting file
 "-----------------------------------------------------------------
@@ -114,6 +119,11 @@ if executable("clang++")
                 \ }
     let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
 endif
+"----------------------------------------------------------------
+"syntastic setting
+"----------------------------------------------------------------
+let g:syntastic_python_checkers = ["pep8"]
+let g:syntastic_js_checkers = ["jshint"]
 "----------------------------------------------------------------
 "java syntax hilight
 "----------------------------------------------------------------
@@ -250,7 +260,7 @@ let NERDTreeWinSize=20
 "pymode 
 "-----------------------------------------------------------------
 "folding method and class
-let g:pymode_folding = 0
+let g:pymode_folding=0
 "show document so slow...
 let g:pymode_doc=0
 "code comletion
@@ -258,6 +268,10 @@ let g:pymode_rope_complete_on_dot=0
 let g:pymode_rope_completion=0
 "refactoring tool so slow...
 let g:pymode_rope = 0
+"virtual env off because of using python3
+let g:pymode_virtualenv=0
+"code checker
+let g:pymode_lint_checkers = ['pep8']
 "-----------------------------------------------------------------
 "tag bar
 "-----------------------------------------------------------------
