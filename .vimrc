@@ -7,23 +7,23 @@
 "-----------------------------------------------------------------
 "neobundle.vim header
 "-----------------------------------------------------------------
-let g:neobundle_default_git_protocol='git'
+let g:neobundle_default_git_protocol="git"
 set nocompatible
 filetype plugin indent off
 
-if has('vim_starting')
+if has("vim_starting")
     if &compatible
         set nocompatible               " Be iMproved
     endif
 
     set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#begin(expand('~/.vim/bundle/'))
+  call neobundle#begin(expand("~/.vim/bundle/"))
 endif
 
 "-----------------------------------------------------------------
 "neobundle.vim main module
 "-----------------------------------------------------------------
-NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleFetch "Shougo/neobundle.vim"
 NeoBundle "Shougo/neocomplete" "code complete
 NeoBundle "scrooloose/syntastic" "syntax checker
 NeoBundle "Shougo/neosnippet" "code snipets
@@ -37,24 +37,24 @@ NeoBundle "scrooloose/nerdtree" "nerdtree
 NeoBundle "majutsushi/tagbar" "tagbar
 "NeoBundle "vim-scripts/java.vim" "java syntax
 NeoBundle "vim-jp/cpp-vim" "syntax for c++
-NeoBundle 'octol/vim-cpp-enhanced-highlight' "syntax for c++ enhance
-NeoBundle 'klen/python-mode' "python syntax
-NeoBundle 'vim-ruby/vim-ruby' "ruby syntax
+NeoBundle "octol/vim-cpp-enhanced-highlight" "syntax for c++ enhance
+NeoBundle "klen/python-mode" "python syntax
+NeoBundle "vim-ruby/vim-ruby" "ruby syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
-NeoBundle 'pangloss/vim-javascript' "javascript syntax
+NeoBundle "pangloss/vim-javascript" "javascript syntax
 NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
-NeoBundle 'jiangmiao/simple-javascript-indenter' "simple javascript indent
-NeoBundle 'hail2u/vim-css3-syntax' "vim css3 syntax
-"NeoBundle 'skammer/vim-css-color' "vim css color this plugin is too slow in not using gvim
-NeoBundle 'othree/html5.vim' "vim html5 syntax
+NeoBundle "jiangmiao/simple-javascript-indenter" "simple javascript indent
+NeoBundle "hail2u/vim-css3-syntax" "vim css3 syntax
+"NeoBundle "skammer/vim-css-color" "vim css color this plugin is too slow in not using gvim
+NeoBundle "othree/html5.vim" "vim html5 syntax
 NeoBundle "leshill/vim-json" "json syntax
 NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
 NeoBundle "tomasr/molokai" "color scheme
-NeoBundle 'altercation/vim-colors-solarized' "color scheme 3
-NeoBundle 'editorconfig/editorconfig-vim' "config file syntax
-"NeoBundle 'jmcantrell/vim-virtualenv' "python virtulal env
-NeoBundle 'tpope/vim-fugitive' "fugitive
+NeoBundle "altercation/vim-colors-solarized" "color scheme 3
+NeoBundle "editorconfig/editorconfig-vim" "config file syntax
+"NeoBundle "jmcantrell/vim-virtualenv" "python virtulal env
+NeoBundle "tpope/vim-fugitive" "fugitive
 
 "-----------------------------------------------------------------
 "neobundle.vim hooter
@@ -110,14 +110,14 @@ set hlsearch
 "C++ compiler. using clang++ (syntastick, quickrun)
 "----------------------------------------------------------------
 if executable("clang++")
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '--std=c++11 --stdlib=libc++'
+    let g:syntastic_cpp_compiler = "clang++"
+    let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
     let g:quickrun_config = {}
-    let g:quickrun_config['cpp/clang++11'] = {
-                \ 'cmdopt': '--std=c++11 --stdlib=libc++',
-                \ 'type': 'cpp/clang++'
+    let g:quickrun_config["cpp/clang++11"] = {
+                \ "cmdopt": "--std=c++11 --stdlib=libc++",
+                \ "type": "cpp/clang++"
                 \ }
-    let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
+    let g:quickrun_config["cpp"] = {"type": "cpp/clang++11"}
 endif
 "----------------------------------------------------------------
 "syntastic setting
@@ -139,7 +139,7 @@ imap {} {}<Left>
 imap [] []<Left>
 imap () ()<Left>
 imap "" ""<Left>
-imap '' ''<Left>
+imap "" ""<Left>
 imap <> <><Left>
 
 "-----------------------------------------------------------------
@@ -163,7 +163,7 @@ let g:rehash256 = 1
 "colorscheme solarized
 "set background=dark
 "airline color
-let g:airline_theme = 'dark'
+let g:airline_theme = "dark"
 "status line
 set t_Co=256
 "line color
@@ -182,16 +182,16 @@ hi clear CursorLine
 let g:airline_powerline_fonts = 1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
-if !exists('g:airline_symbols')
+if !exists("g:airline_symbols")
     let g:airline_symbols = {}
 endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+let g:airline_left_sep = ""
+let g:airline_left_alt_sep = ""
+let g:airline_right_sep = ""
+let g:airline_right_alt_sep = ""
+let g:airline_symbols.branch = ""
+let g:airline_symbols.readonly = ""
+let g:airline_symbols.linenr = ""
 
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
@@ -220,12 +220,12 @@ imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<P
 smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " for snippet_complete marker
-if has('conceal')
+if has("conceal")
     set conceallevel=2 concealcursor=i "enable neosnippet
 endif
 
 "snippet directory
-let g:neosnippet#snippets_directory='~/GitHub/dotfiles/snippets' 
+let g:neosnippet#snippets_directory="~/GitHub/dotfiles/snippets" 
 "-----------------------------------------------------------------
 "nerdtree
 "-----------------------------------------------------------------
@@ -252,10 +252,10 @@ let NERDTreeWinSize=20
 "-----------------------------------------------------------------
 "autocmd FileType python setlocal omnifunc=jedi#completions
 "let g:jedi#auto_vim_configuration = 0
-"if !exists('g:neocomplete#force_omni_input_patterns')
+"if !exists("g:neocomplete#force_omni_input_patterns")
 "    let g:neocomplete#force_omni_input_patterns = {}
 "endif
-"let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+"let g:neocomplete#force_omni_input_patterns.python = "\h\w*\|[^. \t]\.\w*"
 "-----------------------------------------------------------------
 "pymode 
 "-----------------------------------------------------------------
@@ -271,7 +271,7 @@ let g:pymode_rope = 0
 "virtual env off because of using python3
 let g:pymode_virtualenv=0
 "code checker
-let g:pymode_lint_checkers = ['pep8']
+let g:pymode_lint_checkers = ["pep8"]
 "-----------------------------------------------------------------
 "tag bar
 "-----------------------------------------------------------------
