@@ -122,7 +122,7 @@ endif
 "----------------------------------------------------------------
 "syntastic setting
 "----------------------------------------------------------------
-let g:syntastic_python_checkers = ["pep8"]
+let g:syntastic_python_checkers = ["pep8", "pyflakes"]
 let g:syntastic_js_checkers = ["jshint"]
 "----------------------------------------------------------------
 "java syntax hilight
@@ -271,7 +271,7 @@ let g:pymode_rope = 0
 "virtual env off because of using python3
 let g:pymode_virtualenv=0
 "code checker
-let g:pymode_lint_checkers = ["pep8"]
+let g:pymode_lint_checkers = ["pep8", "pyflakes"]
 "-----------------------------------------------------------------
 "tag bar
 "-----------------------------------------------------------------
