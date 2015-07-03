@@ -42,6 +42,7 @@ NeoBundle "klen/python-mode" "python syntax
 NeoBundle "vim-ruby/vim-ruby" "ruby syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle "pangloss/vim-javascript" "javascript syntax
+NeoBundle "mxw/vim-jsx"
 NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
 NeoBundle "jiangmiao/simple-javascript-indenter" "simple javascript indent
 NeoBundle "hail2u/vim-css3-syntax" "vim css3 syntax
