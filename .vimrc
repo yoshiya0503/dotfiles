@@ -124,7 +124,7 @@ endif
 "syntastic setting
 "----------------------------------------------------------------
 let g:syntastic_python_checkers = ["pep8", "pyflakes"]
-let g:syntastic_js_checkers = ["jshint"]
+let g:syntastic_javascript_checkers = ["jsxhint"]
 "----------------------------------------------------------------
 "java syntax hilight
 "----------------------------------------------------------------
@@ -204,10 +204,17 @@ let g:neocomplete#smartCase = 1 "smart mode
 let g:neocomplete#sources#syntax#min_keyword_length = 3 "key word length
 
 "Enable omni completion. Not required if they are already set elsewhere in .vimrc
+"html omni complete is tooooooooooo heavy....
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType html setlocal omnifunc=
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+
+if has('python3')
+    autocmd FileType python setlocal omnifunc=python3complete#Complete
+else
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+endif
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
@@ -287,3 +294,7 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 "css and html
 "------------------------------------------------------------------
 "let g:cssColorVimDoNotMessMyUpdatetime = 1 
+"------------------------------------------------------------------
+"jsx
+"------------------------------------------------------------------
+let g:jsx_ext_required = 0
