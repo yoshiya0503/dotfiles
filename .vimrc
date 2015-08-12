@@ -43,6 +43,7 @@ NeoBundle "vim-ruby/vim-ruby" "ruby syntax
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle "pangloss/vim-javascript" "javascript syntax
 NeoBundle "mxw/vim-jsx"
+NeoBundle "StanAngeloff/php.vim" "PHP
 NeoBundle "itspriddle/vim-javascript-indent" "javascript indent
 NeoBundle "jiangmiao/simple-javascript-indenter" "simple javascript indent
 NeoBundle "hail2u/vim-css3-syntax" "vim css3 syntax
@@ -298,3 +299,12 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 "jsx
 "------------------------------------------------------------------
 let g:jsx_ext_required = 0
+"------------------------------------------------------------------
+"PHP
+"------------------------------------------------------------------
+hi def link phpComment Comment
+hi def link phpDocTags phpDefine
+hi def link phpDocParam phpType
+hi def link phpFunctions phpDefine
+hi def link phpMethods PreProc
+"hi def link phpFunction PreProc
