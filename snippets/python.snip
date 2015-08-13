@@ -15,8 +15,9 @@ snippet     encoding
 
 
 snippet pydoc
-    """
-    ${1:args} -- ${2:description}
+    """ ${1:func_description}
+    ${2:category}:
+        - ${3:param}: ${4:arg_description}
     """
 
 snippet for_range
