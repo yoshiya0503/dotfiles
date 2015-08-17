@@ -308,3 +308,7 @@ hi def link phpDocParam phpType
 hi def link phpFunctions phpDefine
 hi def link phpMethods PreProc
 "hi def link phpFunction PreProc
+"------------------------------------------------------------------
+"Ruby
+"------------------------------------------------------------------
+autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
