@@ -1,5 +1,5 @@
 "-----------------------------------------------------------------
-"@title My .vimrc 
+"@title My .vimrc
 "@author Yoshiya Ito
 "@version 3.0.0
 "-----------------------------------------------------------------
@@ -29,11 +29,11 @@ NeoBundle "scrooloose/syntastic" "syntax checker
 NeoBundle "Shougo/neosnippet" "code snipets
 NeoBundle "Shougo/neosnippet-snippets" "snipet file
 NeoBundle "honza/vim-snippets" "code snipets
-"NeoBundle "davidhalter/jedi-vim" 
+"NeoBundle "davidhalter/jedi-vim"
 NeoBundle "Shougo/vimshell.git" "shell of vim
 NeoBundle "thinca/vim-quickrun" "quick run
 NeoBundle "bling/vim-airline" "airline of status bar
-NeoBundle "scrooloose/nerdtree" "nerdtree 
+NeoBundle "scrooloose/nerdtree" "nerdtree
 NeoBundle "majutsushi/tagbar" "tagbar
 "NeoBundle "vim-scripts/java.vim" "java syntax
 NeoBundle "vim-jp/cpp-vim" "syntax for c++
@@ -107,6 +107,8 @@ set bs=start
 set encoding=utf8
 "hilight search
 set hlsearch
+"remove trailing whitespace
+autocmd BufWritePre * :%s/\s\+$//ge
 
 "----------------------------------------------------------------
 "C++ compiler. using clang++ (syntastick, quickrun)
@@ -173,7 +175,7 @@ highlight LineNr ctermfg=226
 set cursorline
 hi clear CursorLine
 "row
-"set cursorline 
+"set cursorline
 "hi CursorLine ctermbg=102
 "virtical
 "set cursorcolumn
@@ -234,7 +236,7 @@ if has("conceal")
 endif
 
 "snippet directory
-let g:neosnippet#snippets_directory="~/GitHub/dotfiles/snippets" 
+let g:neosnippet#snippets_directory="~/GitHub/dotfiles/snippets"
 "-----------------------------------------------------------------
 "nerdtree
 "-----------------------------------------------------------------
@@ -266,7 +268,7 @@ let NERDTreeWinSize=20
 "endif
 "let g:neocomplete#force_omni_input_patterns.python = "\h\w*\|[^. \t]\.\w*"
 "-----------------------------------------------------------------
-"pymode 
+"pymode
 "-----------------------------------------------------------------
 "folding method and class
 let g:pymode_folding=0
@@ -294,7 +296,7 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 "------------------------------------------------------------------
 "css and html
 "------------------------------------------------------------------
-"let g:cssColorVimDoNotMessMyUpdatetime = 1 
+"let g:cssColorVimDoNotMessMyUpdatetime = 1
 "------------------------------------------------------------------
 "jsx
 "------------------------------------------------------------------
