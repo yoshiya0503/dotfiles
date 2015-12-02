@@ -40,6 +40,9 @@ NeoBundle "vim-jp/cpp-vim" "syntax for c++
 NeoBundle "octol/vim-cpp-enhanced-highlight" "syntax for c++ enhance
 NeoBundle "klen/python-mode" "python syntax
 NeoBundle "vim-ruby/vim-ruby" "ruby syntax
+NeoBundle "NigoroJr/rsense"  "ruby syntax improve
+NeoBundle "todesking/ruby_hl_lvar.vim" " ruby local syntax
+NeoBundle "tpope/vim-rails" "ruby on rails
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle "pangloss/vim-javascript" "javascript syntax
 NeoBundle "mxw/vim-jsx"
@@ -128,6 +131,7 @@ endif
 "----------------------------------------------------------------
 let g:syntastic_python_checkers = ["pep8", "pyflakes"]
 let g:syntastic_javascript_checkers = ["jsxhint"]
+let g:syntastic_ruby_checkers = ['rubocop']
 "----------------------------------------------------------------
 "java syntax hilight
 "----------------------------------------------------------------
@@ -311,6 +315,7 @@ hi def link phpFunctions phpDefine
 hi def link phpMethods PreProc
 "hi def link phpFunction PreProc
 "------------------------------------------------------------------
-"Ruby
+"Ruby and Ruby on Rails
 "------------------------------------------------------------------
 autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
+let g:rsenseUseOmniFunc = 1
