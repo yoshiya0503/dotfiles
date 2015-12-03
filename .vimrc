@@ -1,7 +1,7 @@
 "-----------------------------------------------------------------
 "@title My .vimrc
 "@author Yoshiya Ito
-"@version 3.0.0
+"@version 4.0.0
 "-----------------------------------------------------------------
 
 "-----------------------------------------------------------------
@@ -103,7 +103,7 @@ set ttyfast
 "c indent setting
 set cinoptions+=:0,g0
 "use clipbord
-"set clipboard=unnamed,autoselect
+set clipboard=unnamed,autoselect
 "backspace enable for vim 7.4
 set bs=start
 "encoding
@@ -149,7 +149,6 @@ imap () ()<Left>
 imap "" ""<Left>
 imap "" ""<Left>
 imap <> <><Left>
-
 "-----------------------------------------------------------------
 "high speed cursor in keyRemap4Mac
 "-----------------------------------------------------------------
@@ -168,8 +167,6 @@ syntax on
 colorscheme molokai
 let g:molokai_original=1
 let g:rehash256 = 1
-"colorscheme solarized
-"set background=dark
 "airline color
 let g:airline_theme = "dark"
 "status line
@@ -178,12 +175,6 @@ set t_Co=256
 highlight LineNr ctermfg=226
 set cursorline
 hi clear CursorLine
-"row
-"set cursorline
-"hi CursorLine ctermbg=102
-"virtical
-"set cursorcolumn
-"hi CursorColumn ctermbg=102
 "-----------------------------------------------------------------
 "airline
 "-----------------------------------------------------------------
@@ -203,7 +194,7 @@ let g:airline_symbols.linenr = ""
 
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
-
+"-----------------------------------------------------------------
 "neocomplete
 "-----------------------------------------------------------------
 let g:neocomplete#enable_at_startup=1 "enable neocomplechace
@@ -240,7 +231,7 @@ if has("conceal")
 endif
 
 "snippet directory
-let g:neosnippet#snippets_directory="~/GitHub/dotfiles/snippets"
+let g:neosnippet#snippets_directory="~/.vim/snippets"
 "-----------------------------------------------------------------
 "nerdtree
 "-----------------------------------------------------------------
@@ -313,9 +304,9 @@ hi def link phpDocTags phpDefine
 hi def link phpDocParam phpType
 hi def link phpFunctions phpDefine
 hi def link phpMethods PreProc
-"hi def link phpFunction PreProc
 "------------------------------------------------------------------
 "Ruby and Ruby on Rails
 "------------------------------------------------------------------
 autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
+autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 let g:rsenseUseOmniFunc = 1
