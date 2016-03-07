@@ -59,7 +59,15 @@ NeoBundle "tomasr/molokai" "color scheme
 NeoBundle "altercation/vim-colors-solarized" "color scheme 3
 NeoBundle "editorconfig/editorconfig-vim" "config file syntax
 "NeoBundle "jmcantrell/vim-virtualenv" "python virtulal env
+NeoBundle "ryanoasis/vim-devicons" "icon
 NeoBundle "tpope/vim-fugitive" "fugitive
+"NeoBundleLazy 'jeaye/color_coded', {
+            \ 'build': {
+            \   'unix': 'cmake . && make && make install',
+            \ },
+            \ 'autoload': { 'filetypes' : ['c', 'cpp', 'objc', 'objcpp'] },
+            \ 'build_commands' : ['cmake', 'make']
+            \}
 
 "-----------------------------------------------------------------
 "neobundle.vim hooter
@@ -165,6 +173,7 @@ syntax on
 "colorscheme molokai need for
 "http://fixture.jp/blog/2012/08/patch-to-disable-molokai-bgcolor/
 colorscheme molokai
+set background=dark
 let g:molokai_original=1
 let g:rehash256 = 1
 "airline color
