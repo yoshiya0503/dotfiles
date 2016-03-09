@@ -61,6 +61,7 @@ NeoBundle "editorconfig/editorconfig-vim" "config file syntax
 "NeoBundle "jmcantrell/vim-virtualenv" "python virtulal env
 NeoBundle "ryanoasis/vim-devicons" "icon
 NeoBundle "tpope/vim-fugitive" "fugitive
+NeoBundle "kana/vim-submode" "submode
 "NeoBundleLazy 'jeaye/color_coded', {
             \ 'build': {
             \   'unix': 'cmake . && make && make install',
@@ -137,6 +138,15 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
+" panel size
+call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
+call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
+call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
+call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
+call submode#map('bufmove', 'n', '', '>', '<C-w>>')
+call submode#map('bufmove', 'n', '', '<', '<C-w><')
+call submode#map('bufmove', 'n', '', '+', '<C-w>+')
+call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 "----------------------------------------------------------------
 "C++ compiler. using clang++ (syntastick, quickrun)
 "----------------------------------------------------------------
