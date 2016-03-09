@@ -1,7 +1,7 @@
 "-----------------------------------------------------------------
 "@title My .vimrc
 "@author Yoshiya Ito
-"@version 4.0.0
+"@version 5.0.0
 "-----------------------------------------------------------------
 
 "-----------------------------------------------------------------
@@ -90,8 +90,6 @@ set laststatus=2
 set nowritebackup
 "no swap
 set noswapfile
-"cahnge to normal mode
-inoremap <silent> jj <esc>
 "indent
 set cindent
 set autoindent
@@ -120,7 +118,25 @@ set encoding=utf8
 set hlsearch
 "remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//ge
-
+"key remap
+inoremap <silent> jj <esc>
+" panel
+nnoremap s <Nop>
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+nnoremap sq :<C-u>q<CR>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
+" tab
+nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
+nnoremap tl gt
+nnoremap th gT
 "----------------------------------------------------------------
 "C++ compiler. using clang++ (syntastick, quickrun)
 "----------------------------------------------------------------
