@@ -55,6 +55,9 @@ NeoBundle "othree/html5.vim" "vim html5 syntax
 NeoBundle "leshill/vim-json" "json syntax
 NeoBundle "digitaltoad/vim-jade" "jade syntax
 NeoBundle "wavded/vim-stylus" "stylus syntax
+NeoBundle 'plasticboy/vim-markdown' "markdown
+NeoBundle 'kannokanno/previm' "preview
+NeoBundle 'tyru/open-browser.vim' "open browser
 NeoBundle "tomasr/molokai" "color scheme
 NeoBundle "altercation/vim-colors-solarized" "color scheme 3
 NeoBundle "editorconfig/editorconfig-vim" "config file syntax
@@ -177,12 +180,12 @@ let g:java_highlight_functions=1
 "----------------------------------------------------------------
 "key remap for ()
 "----------------------------------------------------------------
-imap {} {}<Left>
-imap [] []<Left>
-imap () ()<Left>
-imap "" ""<Left>
-imap "" ""<Left>
-imap <> <><Left>
+"imap {} {}<Left>
+"imap [] []<Left>
+"imap () ()<Left>
+"imap "" ""<Left>
+"imap "" ""<Left>
+"imap <> <><Left>
 "-----------------------------------------------------------------
 "high speed cursor in keyRemap4Mac
 "-----------------------------------------------------------------
