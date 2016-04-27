@@ -43,6 +43,7 @@ NeoBundle "vim-ruby/vim-ruby" "ruby syntax
 NeoBundle "NigoroJr/rsense"  "ruby syntax improve
 NeoBundle "todesking/ruby_hl_lvar.vim" " ruby local syntax
 NeoBundle "tpope/vim-rails" "ruby on rails
+NeoBundle "fatih/vim-go" " go
 NeoBundle "jelera/vim-javascript-syntax" "javascript syntax
 NeoBundle "pangloss/vim-javascript" "javascript syntax
 NeoBundle "mxw/vim-jsx"
@@ -246,6 +247,7 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 "autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType html setlocal omnifunc=
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+au BufRead,BufNewFile *.md set filetype=markdown
 
 if has('python3')
     autocmd FileType python setlocal omnifunc=python3complete#Complete
