@@ -2,13 +2,10 @@ snippet signature
     #! /usr/bin/env ruby
     # coding: utf-8
 
-    ##
-    # = ${1:title}
-    # Author:: Yoshiya Ito <myon53@gmail.com>
-    # Date:: ${2:date}
-    # Description:: ${3:description}
+    # @api ${1:api}
+    # @author Yoshiya Ito <myon53@gmail.com>
+    # @note ${2:description}
 
-snippet rdoc
-    # ${1:description}
-    # Param:: ${2:param}
-    # Return:: ${3:return}
+snippet yard
+    # @param ${1:name} [${2:types}]
+    # @return [${3:types}]
