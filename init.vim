@@ -32,7 +32,8 @@ call dein#add('vim-ruby/vim-ruby') "ruby
 call dein#add('NigoroJr/rsense') "ruby syntax check
 call dein#add('tpope/vim-rails') "ruby on rails
 call dein#add('jelera/vim-javascript-syntax') "javascript
-call dein#add('fatih/vim-go') " go
+call dein#add('fatih/vim-go') "go
+call dein#add('zchee/deoplete-go', {'build': 'make'}) "go completion
 call dein#add('pangloss/vim-javascript') "javascript
 call dein#add('itspriddle/vim-javascript-indent') "javascript indent
 call dein#add('jiangmiao/simple-javascript-indenter') "javascript indent
@@ -201,6 +202,7 @@ let g:airline#extensions#tabline#enabled = 1
 "deoplete
 "-----------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 "-----------------------------------------------------------------
 "neosnippet
 "-----------------------------------------------------------------
