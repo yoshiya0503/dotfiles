@@ -2,7 +2,7 @@
     "rules": {
         "indent": [
             2,
-            4
+            2
         ],
         "quotes": [
             2,
@@ -17,25 +17,25 @@
         "always"
         ]
     },
-        "env": {
-            "es6": true,
-            "node": true,
-            "browser": true
-        },
-        "extends": "eslint:recommended",
+    "env": {
+        "es6": true,
+        "node": true,
+        "browser": true
+    },
+    "ecmaFeatures": {
+        "jsx": true,
+        "modules": true,
+        "experimentalObjectRestSpread": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true,
-            "modules": true,
             "experimentalObjectRestSpread": true
-        },
-        "parserOptions": {
-            "sourceType": "module",
-            "ecmaFeatures": {
-                "jsx": true,
-                "experimentalObjectRestSpread": true
-            }
-        },
-        "plugins": [
-            "react"
-        ]
+        }
+    },
+    "plugins": [
+        "react"
+    ],
+    "extends": ["eslint:recommended", "plugin:react/recommended"]
 }
