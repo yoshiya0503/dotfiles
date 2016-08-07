@@ -127,10 +127,10 @@ call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 "----------------------------------------------------------------
 "C++ compiler. using clang++ (syntastick, quickrun)
 "----------------------------------------------------------------
+let g:quickrun_config = {}
 if executable("clang++")
     let g:syntastic_cpp_compiler = "clang++"
     let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
-    let g:quickrun_config = {}
     let g:quickrun_config["cpp/clang++11"] = {
                 \ "cmdopt": "--std=c++11 --stdlib=libc++",
                 \ "type": "cpp/clang++"
@@ -147,8 +147,8 @@ let g:syntastic_python_checkers = ["pep8", "pyflakes"]
 let g:syntastic_javascript_checkers = ["eslint"]
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_go_checkers = ['go']
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 "----------------------------------------------------------------
@@ -286,10 +286,12 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 "css and html
 "------------------------------------------------------------------
 "let g:cssColorVimDoNotMessMyUpdatetime = 1
+autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "------------------------------------------------------------------
-"jsx
+"js, es, jsx
 "------------------------------------------------------------------
 let g:jsx_ext_required = 0
+autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "------------------------------------------------------------------
 "PHP
 "------------------------------------------------------------------
