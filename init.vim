@@ -31,13 +31,12 @@ call dein#add('klen/python-mode') "python
 call dein#add('vim-ruby/vim-ruby') "ruby
 call dein#add('NigoroJr/rsense') "ruby syntax check
 call dein#add('tpope/vim-rails') "ruby on rails
+call dein#add('pangloss/vim-javascript') "javascript
 call dein#add('jelera/vim-javascript-syntax') "javascript
 call dein#add('othree/yajs.vim') "javascript
+call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
 call dein#add('fatih/vim-go') "go
 call dein#add('zchee/deoplete-go', {'build': 'make'}) "go completion
-call dein#add('pangloss/vim-javascript') "javascript
-call dein#add('itspriddle/vim-javascript-indent') "javascript indent
-call dein#add('jiangmiao/simple-javascript-indenter') "javascript indent
 call dein#add('mxw/vim-jsx') "jsx
 call dein#add('StanAngeloff/php.vim') "PHP
 call dein#add('hail2u/vim-css3-syntax') "css3
@@ -287,6 +286,7 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 "------------------------------------------------------------------
 "let g:cssColorVimDoNotMessMyUpdatetime = 1
 autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "------------------------------------------------------------------
 "js, es, jsx
 "------------------------------------------------------------------
