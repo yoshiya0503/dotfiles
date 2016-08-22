@@ -173,7 +173,7 @@ syntax on
 "colorscheme
 colorscheme molokai
 "airline color
-let g:airline_theme = "molokai"
+let g:airline_theme = "dark"
 "line color
 highlight LineNr ctermfg=190
 "-----------------------------------------------------------------
