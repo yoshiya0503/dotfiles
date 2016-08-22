@@ -173,11 +173,9 @@ syntax on
 "colorscheme
 colorscheme molokai
 "airline color
-let g:airline_theme = "dark"
+let g:airline_theme = "molokai"
 "line color
-highlight LineNr ctermfg=226
-set cursorline
-hi clear CursorLine
+highlight LineNr ctermfg=190
 "-----------------------------------------------------------------
 "airline
 "-----------------------------------------------------------------
@@ -227,7 +225,7 @@ autocmd vimenter * NERDTree|normal gg3j
 " Bookmarks
 "let g:NERDTreeShowBookmarks=1
 " no help
-let NERDTreeMinimalUI = 1
+"let NERDTreeMinimalUI = 1
 "display hidden file
 let g:NERDTreeShowHidden=1
 "tree style
