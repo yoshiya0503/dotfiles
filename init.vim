@@ -66,7 +66,7 @@ set number
 set title
 "show carsole point
 set ruler
-"show stagus line
+"show status line
 set laststatus=2
 "no backup
 set nowritebackup
@@ -151,7 +151,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 "----------------------------------------------------------------
-"java syntax hilight
+"java
 "----------------------------------------------------------------
 let g:java_highlight_all=1
 let g:java_highlight_debug=1
@@ -221,11 +221,8 @@ let g:neosnippet#snippets_directory="~/.vim/snippets"
 "nerdtree
 "-----------------------------------------------------------------
 "auto mode
-autocmd vimenter * NERDTree|normal gg3j
-" Bookmarks
-"let g:NERDTreeShowBookmarks=1
+autocmd vimenter * NERDTree
 " no help
-"let NERDTreeMinimalUI = 1
 "display hidden file
 let g:NERDTreeShowHidden=1
 "tree style
@@ -233,7 +230,23 @@ let g:NERDTreeDirArrows=1
 "tree width
 let NERDTreeWinSize=20
 "-----------------------------------------------------------------
-"jedi-vim
+" devicons
+"-----------------------------------------------------------------
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"-----------------------------------------------------------------
+"tag bar
+"-----------------------------------------------------------------
+" no help
+let g:tagbar_compact = 1
+"open tagbar
+nmap <F2> :TagbarToggle<CR>
+"tagbar width
+let g:tagbar_width = 20
+"auto open tagbar
+"autocmd filetype * nested :call tagbar#autoopen(1)
+autocmd FileType * nested :call tagbar#autoopen(0)
+"-----------------------------------------------------------------
+"python jedi-vim
 "-----------------------------------------------------------------
 "jedi is too slow so, comment out this setting
 "autocmd FileType python setlocal omnifunc=jedi#completions
@@ -252,7 +265,7 @@ let NERDTreeWinSize=20
 "endif
 "let g:neocomplete#force_omni_input_patterns.python = "\h\w*\|[^. \t]\.\w*"
 "-----------------------------------------------------------------
-"pymode
+"python pymode
 "-----------------------------------------------------------------
 "folding method and class
 let g:pymode_folding=0
@@ -267,18 +280,6 @@ let g:pymode_rope = 0
 let g:pymode_virtualenv=0
 "code checker
 let g:pymode_lint_checkers = ["pep8", "pyflakes"]
-"-----------------------------------------------------------------
-"tag bar
-"-----------------------------------------------------------------
-" no help
-let g:tagbar_compact = 1
-"open tagbar
-nmap <F2> :TagbarToggle<CR>
-"tagbar width
-let g:tagbar_width = 20
-"auto open tagbar
-"autocmd filetype * nested :call tagbar#autoopen(1)
-autocmd FileType * nested :call tagbar#autoopen(0)
 "------------------------------------------------------------------
 "css and html
 "------------------------------------------------------------------
