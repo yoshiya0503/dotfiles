@@ -33,12 +33,12 @@ call dein#add('NigoroJr/rsense') "ruby syntax check
 call dein#add('tpope/vim-rails') "ruby on rails
 call dein#add('pangloss/vim-javascript') "javascript
 call dein#add('jelera/vim-javascript-syntax') "javascript
-call dein#add('othree/yajs.vim') "javascript
-call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
-call dein#add('othree/es.next.syntax.vim') "es7
+"call dein#add('othree/yajs.vim') "javascript
+"call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
+"call dein#add('othree/es.next.syntax.vim') "es7
+call dein#add('mxw/vim-jsx') "jsx
 call dein#add('fatih/vim-go') "go
 call dein#add('zchee/deoplete-go', {'build': 'make'}) "go completion
-call dein#add('mxw/vim-jsx') "jsx
 call dein#add('StanAngeloff/php.vim') "PHP
 call dein#add('hail2u/vim-css3-syntax') "css3
 call dein#add('othree/html5.vim') "html5
