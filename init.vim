@@ -20,7 +20,7 @@ call dein#add('Shougo/neosnippet.vim') "code snipets
 call dein#add('Shougo/neosnippet-snippets') "snippet file
 call dein#add('scrooloose/syntastic') "syntax checker
 call dein#add('honza/vim-snippets') "code snipets
-call dein#add('davidhalter/jedi-vim') "python complete
+"call dein#add('davidhalter/jedi-vim') "python complete
 call dein#add('thinca/vim-quickrun') "quick run
 call dein#add('bling/vim-airline') "statuc bar
 call dein#add('scrooloose/nerdtree') "filer
@@ -35,13 +35,14 @@ call dein#add('pangloss/vim-javascript') "javascript
 call dein#add('jelera/vim-javascript-syntax') "javascript
 call dein#add('othree/yajs.vim') "javascript
 call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
+call dein#add('othree/es.next.syntax.vim') "es7
 call dein#add('fatih/vim-go') "go
 call dein#add('zchee/deoplete-go', {'build': 'make'}) "go completion
 call dein#add('mxw/vim-jsx') "jsx
 call dein#add('StanAngeloff/php.vim') "PHP
 call dein#add('hail2u/vim-css3-syntax') "css3
 call dein#add('othree/html5.vim') "html5
-call dein#add('leshill/vim-json') "json
+call dein#add('elzr/vim-json') "json
 call dein#add('plasticboy/vim-markdown') "markdown
 call dein#add('tomasr/molokai') "colorschema
 call dein#add('editorconfig/editorconfig-vim') "configfile
@@ -248,6 +249,7 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 "-----------------------------------------------------------------
 "python jedi-vim
 "-----------------------------------------------------------------
+let g:python3_host_prog = '/usr/local/bin/python3'
 "jedi is too slow so, comment out this setting
 "autocmd FileType python setlocal omnifunc=jedi#completions
 "let g:jedi#popup_on_dot = 1
