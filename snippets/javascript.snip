@@ -67,7 +67,7 @@ snippet should
 
 snippet signature
     /**
-     * @fileoverview ${1:hoge service}
+     * @@fileoverview ${1:hoge service}
      * @name ${2: hoge}
      * @author Yoshiya Ito <myon53@gmail.com>
      */
@@ -78,3 +78,69 @@ snippet jsdoc
      * @param ${2:\{\}} param
      * @param {Function} callback
      */
+
+snippet hoge
+    hoge
+
+snippet react
+    import React, { Component } from 'react';
+
+    export default class ${1:classname} extends Component {
+      render() {
+        return (
+          <div></div>
+        );
+      }
+    }
+
+snippet redux_container
+    import React, { Component } from 'react';
+    import { connect } from 'react-redux';
+
+    const mapStateToProps = state => ({
+    });
+
+    const mapDispatchToProps = dispatch => ({
+    });
+
+    class ${1:classname} extends Component {
+      render() {
+        return (
+          <div></div>
+        );
+      }
+    }
+
+    export default connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(${2:classname});
+
+snippet redux_action
+    const ${1:action} = () => (
+      {
+        type: '${2:const}',
+      }
+    );
+
+    export const ${3:func} = () => (
+      (dispatch) => {
+      }
+    );
+
+snippet redux_reducer
+    import _ from 'lodash';
+
+    const initialState = {
+    };
+
+    export default (state = initialState, action) => {
+      switch (action.type) {
+        case '${1:action1}':
+          return _.assign({}, state, {});
+        case '${2:action2}':
+          return _.assign({}, state, {});
+        default:
+          return state;
+      }
+    };
