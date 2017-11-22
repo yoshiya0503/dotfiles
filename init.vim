@@ -37,6 +37,7 @@ call dein#add('jelera/vim-javascript-syntax') "javascript
 "call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
 "call dein#add('othree/es.next.syntax.vim') "es7
 call dein#add('mxw/vim-jsx') "jsx
+call dein#add('flowtype/vim-flow') "flow
 call dein#add('fatih/vim-go') "go
 call dein#add('zchee/deoplete-go', {'build': 'make'}) "go completion
 call dein#add('StanAngeloff/php.vim') "PHP
@@ -145,6 +146,7 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_python_checkers = ["pep8", "pyflakes"]
 let g:syntastic_javascript_checkers = ["eslint"]
+let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_go_checkers = ['go']
 let g:syntastic_always_populate_loc_list = 1
@@ -217,7 +219,7 @@ if has("conceal")
 endif
 
 "snippet directory
-let g:neosnippet#snippets_directory="~/.vim/snippets"
+let g:neosnippet#snippets_directory="~/.config/nvim/snippets"
 "-----------------------------------------------------------------
 "nerdtree
 "-----------------------------------------------------------------
@@ -292,6 +294,8 @@ autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "js, es, jsx
 "------------------------------------------------------------------
 let g:jsx_ext_required = 0
+let g:javascript_plugin_flow = 1
+let g:javascript_plugin_jsdoc = 1
 autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "------------------------------------------------------------------
 "PHP
