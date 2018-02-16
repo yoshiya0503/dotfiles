@@ -36,6 +36,7 @@ call dein#add('jelera/vim-javascript-syntax') "javascript
 "call dein#add('othree/yajs.vim') "javascript
 "call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
 "call dein#add('othree/es.next.syntax.vim') "es7
+call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
 call dein#add('mxw/vim-jsx') "jsx
 call dein#add('flowtype/vim-flow') "flow
 call dein#add('fatih/vim-go') "go
@@ -144,9 +145,11 @@ endif
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_python_checkers = ["pep8", "pyflakes"]
+" use python-mode
+let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
 let g:syntastic_javascript_checkers = ["eslint"]
-let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+"let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+"let g:syntastic_javascript_eslint_exe='yarn run eslint'
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_go_checkers = ['go']
 let g:syntastic_always_populate_loc_list = 1
@@ -284,6 +287,8 @@ let g:pymode_rope = 0
 let g:pymode_virtualenv=0
 "code checker
 let g:pymode_lint_checkers = ["pep8", "pyflakes"]
+"python version
+let g:pymode_python = 'python3'
 "------------------------------------------------------------------
 "css and html
 "------------------------------------------------------------------
