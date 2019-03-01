@@ -10,7 +10,7 @@
 filetype plugin indent off
 if 0 | endif
 set runtimepath^=/Users/yoshiya/.config/nvim/dein/repos/github.com/Shougo/dein.vim
-call dein#begin(expand('/Users/yoshiya/.config/nvim/dein'))
+call dein#begin('/Users/yoshiya/.config/nvim/dein')
 "-----------------------------------------------------------------
 "dein module
 "-----------------------------------------------------------------
@@ -40,7 +40,6 @@ call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
 call dein#add('mxw/vim-jsx') "jsx
 call dein#add('flowtype/vim-flow') "flow
 call dein#add('fatih/vim-go') "go
-call dein#add('zchee/deoplete-go', {'build': 'make'}) "go completion
 call dein#add('StanAngeloff/php.vim') "PHP
 call dein#add('hail2u/vim-css3-syntax') "css3
 call dein#add('othree/html5.vim') "html5
@@ -151,7 +150,7 @@ let g:syntastic_javascript_checkers = ["eslint"]
 "let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 "let g:syntastic_javascript_eslint_exe='yarn run eslint'
 let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_go_checkers = ['go']
+let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -207,6 +206,7 @@ let g:airline#extensions#tabline#enabled = 1
 "-----------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
+let g:deoplete#num_processes = 1
 "-----------------------------------------------------------------
 "neosnippet
 "-----------------------------------------------------------------
