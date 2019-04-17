@@ -1,81 +1,52 @@
-"-----------------------------------------------------------------
-"@title My nvim/init.vim
-"@author Yoshiya Ito
-"@version 1.0.0
-"-----------------------------------------------------------------
-
-"-----------------------------------------------------------------
-"dein.vim header
-"-----------------------------------------------------------------
-filetype plugin indent off
-if 0 | endif
-set runtimepath^=/Users/yoshiya/.config/nvim/dein/repos/github.com/Shougo/dein.vim
-call dein#begin('/Users/yoshiya/.config/nvim/dein')
-"-----------------------------------------------------------------
-"dein module
-"-----------------------------------------------------------------
-call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/deoplete.nvim') "code complete
-call dein#add('Shougo/neosnippet.vim') "code snipets
-call dein#add('Shougo/neosnippet-snippets') "snippet file
-call dein#add('scrooloose/syntastic') "syntax checker
-call dein#add('honza/vim-snippets') "code snipets
-"call dein#add('davidhalter/jedi-vim') "python complete
-call dein#add('thinca/vim-quickrun') "quick run
-call dein#add('bling/vim-airline') "statuc bar
-call dein#add('scrooloose/nerdtree') "filer
-call dein#add('majutsushi/tagbar') "file tag
-call dein#add('vim-jp/cpp-vim') "C++
-call dein#add('octol/vim-cpp-enhanced-highlight') "C++ enhance
-call dein#add('klen/python-mode') "python
-call dein#add('vim-ruby/vim-ruby') "ruby
-call dein#add('NigoroJr/rsense') "ruby syntax check
-call dein#add('tpope/vim-rails') "ruby on rails
-call dein#add('pangloss/vim-javascript') "javascript
-call dein#add('jelera/vim-javascript-syntax') "javascript
-"call dein#add('othree/yajs.vim') "javascript
-"call dein#add('othree/javascript-libraries-syntax.vim') "javascript lib syntax
-"call dein#add('othree/es.next.syntax.vim') "es7
-call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
-call dein#add('mxw/vim-jsx') "jsx
-call dein#add('flowtype/vim-flow') "flow
-call dein#add('fatih/vim-go') "go
-call dein#add('StanAngeloff/php.vim') "PHP
-call dein#add('hail2u/vim-css3-syntax') "css3
-call dein#add('othree/html5.vim') "html5
-call dein#add('elzr/vim-json') "json
-call dein#add('plasticboy/vim-markdown') "markdown
-call dein#add('tomasr/molokai') "colorschema
-call dein#add('editorconfig/editorconfig-vim') "configfile
-call dein#add('ryanoasis/vim-devicons') "icon
-call dein#add('tpope/vim-fugitive') "git
-call dein#add('kana/vim-submode') "submode
-"-----------------------------------------------------------------
-"dein hooter
-"-----------------------------------------------------------------
-call dein#end()
-if dein#check_install()
-  call dein#install()
-endif
-filetype indent on
-filetype plugin indent on
-"-----------------------------------------------------------------
-"original vim setting file
-"-----------------------------------------------------------------
-"show line number
-set number
-"show title
-set title
-"show carsole point
-set ruler
-"show status line
-set laststatus=2
-"no backup
-set nowritebackup
-"no swap
-set noswapfile
-"indent
-set cindent
+"---------------------------
+" @title nvim/init.vim
+" @author Yoshiya Ito
+" @version 2.0.0
+"---------------------------
+"---------------------------
+" vim-plug package manager
+"---------------------------
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'scrooloose/syntastic' " syntax check
+Plug 'Shougo/neosnippet.vim' " code snippets
+Plug 'Shougo/neosnippet-snippets' " snippets file
+Plug 'Shougo/deoplete.nvim' " completion
+Plug 'davidhalter/jedi-vim' " python completion
+Plug 'NigoroJr/rsense'      " ruby completion
+Plug 'scrooloose/nerdtree' " filer
+Plug 'majutsushi/tagbar'   " tagbar
+Plug 'thinca/vim-quickrun' " quick run
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " nerd color
+Plug 'vim-airline/vim-airline'  " status bar
+Plug 'octol/vim-cpp-enhanced-highlight' " C++
+Plug 'python-mode/python-mode', { 'branch': 'develop' } " python
+Plug 'vim-ruby/vim-ruby' " ruby
+Plug 'tpope/vim-rails' " rails
+Plug 'pangloss/vim-javascript' " javascript indent
+Plug 'jelera/vim-javascript-syntax' " javascript syntax
+Plug 'othree/html5.vim' " html5
+Plug 'hail2u/vim-css3-syntax' " css3
+Plug 'mxw/vim-jsx' " JSX
+Plug 'StanAngeloff/php.vim' " php
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'elzr/vim-json' " json
+Plug 'plasticboy/vim-markdown' " markdown
+Plug 'godlygeek/tabular' " table markdown
+Plug 'tomasr/molokai' " color scheme
+Plug 'ryanoasis/vim-devicons' " icons
+Plug 'tpope/vim-fugitive' " git
+call plug#end()
+"---------------------------
+" vim original conf
+"---------------------------
+set number        " show line number
+set title         " show title
+set ruler         " show carsole point
+set laststatus=2  " show status line
+set display=uhex  " show hex
+set nowritebackup " no backup
+set noswapfile    " no swap
+set cindent       " indent
 set autoindent
 set smartindent
 set tabstop=4
@@ -85,19 +56,12 @@ set expandtab
 set smarttab
 set showmatch
 set showcmd
-"show hex
-set display=uhex
-"scroll speed up?
-set lazyredraw
-"c indent setting
-set cinoptions+=:0,g0
-"use clipbord
-set clipboard+=unnamedplus
-"hilight search
-set hlsearch
-"remove trailing whitespace
-autocmd BufWritePre * :%s/\s\+$//ge
-"key remap
+set lazyredraw             " scroll speed up?
+set cinoptions+=:0,g0      " c indent setting
+set clipboard+=unnamedplus " use clipbord
+set hlsearch               " hilight search
+autocmd BufWritePre * :%s/\s\+$//ge " remove trailing whitespace
+" key remap
 inoremap <silent> jj <esc>
 " panel
 nnoremap s <Nop>
@@ -116,74 +80,60 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
-" panel size
-call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
-call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
-call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
-call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
-call submode#map('bufmove', 'n', '', '>', '<C-w>>')
-call submode#map('bufmove', 'n', '', '<', '<C-w><')
-call submode#map('bufmove', 'n', '', '+', '<C-w>+')
-call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-"----------------------------------------------------------------
-"C++ compiler. using clang++ (syntastick, quickrun)
-"----------------------------------------------------------------
+syntax on " syntax hilight
+colorscheme molokai
+let g:airline_theme = "dark" " airline color
+highlight LineNr ctermfg=190
+"---------------------------
+" syntastic
+"---------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_cpp_compiler = "clang++"
+let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
+" use python-mode
+let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
+let g:syntastic_javascript_checkers = ["eslint"]
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_go_checkers = ['gofmt', 'golint', 'govet']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"---------------------------
+"C++ compiler. using clang++ (quickrun)
+"---------------------------
 let g:quickrun_config = {}
 if executable("clang++")
-    let g:syntastic_cpp_compiler = "clang++"
-    let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
     let g:quickrun_config["cpp/clang++11"] = {
                 \ "cmdopt": "--std=c++11 --stdlib=libc++",
                 \ "type": "cpp/clang++"
                 \ }
     let g:quickrun_config["cpp"] = {"type": "cpp/clang++11"}
 endif
-"----------------------------------------------------------------
-"syntastic setting
-"----------------------------------------------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-" use python-mode
-let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
-let g:syntastic_javascript_checkers = ["eslint"]
-"let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
-"let g:syntastic_javascript_eslint_exe='yarn run eslint'
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-"----------------------------------------------------------------
-"java
-"----------------------------------------------------------------
-let g:java_highlight_all=1
-let g:java_highlight_debug=1
-let g:java_allow_cpp_keywords=1
-let g:java_space_errors=1
-let g:java_highlight_functions=1
-"-----------------------------------------------------------------
-"high speed cursor in keyRemap4Mac
-"-----------------------------------------------------------------
-noremap j <down>
-noremap k <up>
-noremap l <right>
-noremap h <left>
-"-----------------------------------------------------------------
-"color setting
-"-----------------------------------------------------------------
-"syntax hilight
-syntax on
-"colorscheme
-colorscheme molokai
-"airline color
-let g:airline_theme = "dark"
-"line color
-highlight LineNr ctermfg=190
-"-----------------------------------------------------------------
+"---------------------------
+" deoplete and snippet
+"---------------------------
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#num_processes = 1
+"---------------------------
+" snippet
+"---------------------------
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" for snippet_complete marker
+if has("conceal")
+    set conceallevel=2 concealcursor=i "enable neosnippet
+endif
+let g:neosnippet#snippets_directory="~/.config/nvim/snippets" "snippet directory
+"---------------------------
 "airline
-"-----------------------------------------------------------------
+"---------------------------
 let g:airline_powerline_fonts = 1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
@@ -197,128 +147,53 @@ let g:airline_right_alt_sep = ""
 let g:airline_symbols.branch = ""
 let g:airline_symbols.readonly = ""
 let g:airline_symbols.linenr = ""
-
-let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-"-----------------------------------------------------------------
-"deoplete
-"-----------------------------------------------------------------
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#num_processes = 1
-"-----------------------------------------------------------------
-"neosnippet
-"-----------------------------------------------------------------
-"Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" for snippet_complete marker
-if has("conceal")
-    set conceallevel=2 concealcursor=i "enable neosnippet
-endif
-
-"snippet directory
-let g:neosnippet#snippets_directory="~/.config/nvim/snippets"
-"-----------------------------------------------------------------
-"nerdtree
-"-----------------------------------------------------------------
-"auto mode
-autocmd vimenter * NERDTree
-" no help
-"display hidden file
-let g:NERDTreeShowHidden=1
-"tree style
-let g:NERDTreeDirArrows=1
-"tree width
-let NERDTreeWinSize=20
-"-----------------------------------------------------------------
-" devicons
-"-----------------------------------------------------------------
+"---------------------------
+" nerdtree and devicons
+"---------------------------
+autocmd vimenter * NERDTree   " auto mode
+let NERDTreeMinimalUI = 1     " no help
+let g:NERDTreeShowHidden=1    " display hidden file
+let g:NERDTreeDirArrows=1     " tree style
+let g:NERDTreeShowBookmarks=1 " book marks
+let NERDTreeWinSize=20        " tree width
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-"-----------------------------------------------------------------
-"tag bar
-"-----------------------------------------------------------------
-" no help
-let g:tagbar_compact = 1
-"open tagbar
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+"---------------------------
+" tagbar
+"---------------------------
+let g:tagbar_compact = 1 " no help
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 20 "tagbar width
 nmap <F2> :TagbarToggle<CR>
-"tagbar width
-let g:tagbar_width = 20
-"auto open tagbar
-"autocmd filetype * nested :call tagbar#autoopen(1)
-autocmd FileType * nested :call tagbar#autoopen(0)
-"-----------------------------------------------------------------
-"python jedi-vim
-"-----------------------------------------------------------------
-let g:python3_host_prog = '/usr/local/bin/python3'
-"jedi is too slow so, comment out this setting
-"autocmd FileType python setlocal omnifunc=jedi#completions
-"let g:jedi#popup_on_dot = 1
-"let g:jedi#auto_initialization=1
-"let g:jedi#popup_select_first=0
-"let g:jedi#completions_enabled = 1
-"let g:jedi#auto_vim_configuration = 1
-"-----------------------------------------------------------------
-"jedi and neocomplcache combination
-"-----------------------------------------------------------------
-"autocmd FileType python setlocal omnifunc=jedi#completions
-"let g:jedi#auto_vim_configuration = 0
-"if !exists("g:neocomplete#force_omni_input_patterns")
-"    let g:neocomplete#force_omni_input_patterns = {}
-"endif
-"let g:neocomplete#force_omni_input_patterns.python = "\h\w*\|[^. \t]\.\w*"
-"-----------------------------------------------------------------
-"python pymode
-"-----------------------------------------------------------------
-"folding method and class
-let g:pymode_folding=0
-"show document so slow...
-let g:pymode_doc=0
-"code comletion
-let g:pymode_rope_complete_on_dot=0
-let g:pymode_rope_completion=0
-"refactoring tool so slow...
-let g:pymode_rope = 0
-"virtual env off because of using python3
-let g:pymode_virtualenv=0
-"code checker
-let g:pymode_lint_checkers = ["pep8", "pyflakes"]
-"python version
-let g:pymode_python = 'python3'
-"------------------------------------------------------------------
-"css and html
-"------------------------------------------------------------------
-"let g:cssColorVimDoNotMessMyUpdatetime = 1
-autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
-"------------------------------------------------------------------
-"js, es, jsx
-"------------------------------------------------------------------
+autocmd FileType * nested :call tagbar#autoopen(0) "auto open tagbar
+"---------------------------
+" C++
+"---------------------------
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+"---------------------------
+" js, css, html, ruby
+"---------------------------
 let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
 let g:javascript_plugin_jsdoc = 1
 autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-"------------------------------------------------------------------
-"PHP
-"------------------------------------------------------------------
-hi def link phpComment Comment
-hi def link phpDocTags phpDefine
-hi def link phpDocParam phpType
-hi def link phpFunctions phpDefine
-hi def link phpMethods PreProc
-"------------------------------------------------------------------
-"Ruby and Ruby on Rails
-"------------------------------------------------------------------
-autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
+autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
-let g:rsenseUseOmniFunc = 1
-"------------------------------------------------------------------
-"GO
-"------------------------------------------------------------------
+"---------------------------
+" golang
+"---------------------------
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
