@@ -153,7 +153,7 @@ let g:airline#extensions#tabline#enabled = 1
 "---------------------------
 " nerdtree and devicons
 "---------------------------
-autocmd vimenter * NERDTree   " auto mode
+autocmd VimEnter * NERDTree | wincmd p " auto mode
 let NERDTreeMinimalUI = 1     " no help
 let g:NERDTreeShowHidden=1    " display hidden file
 let g:NERDTreeDirArrows=1     " tree style
