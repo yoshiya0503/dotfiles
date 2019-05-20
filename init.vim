@@ -27,12 +27,14 @@ Plug 'jelera/vim-javascript-syntax' " javascript syntax
 Plug 'othree/html5.vim' " html5
 Plug 'hail2u/vim-css3-syntax' " css3
 Plug 'mxw/vim-jsx' " JSX
+Plug 'posva/vim-vue' " Vue
 Plug 'StanAngeloff/php.vim' " php
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'elzr/vim-json' " json
 Plug 'plasticboy/vim-markdown' " markdown
 Plug 'godlygeek/tabular' " table markdown
 Plug 'tomasr/molokai' " color scheme
+Plug 'morhetz/gruvbox' " colorscheme
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
@@ -81,9 +83,9 @@ nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
 syntax on " syntax hilight
-colorscheme molokai
+colorscheme gruvbox
 let g:airline_theme = "dark" " airline color
-highlight LineNr ctermfg=190
+" highlight LineNr ctermfg=190
 "---------------------------
 " syntastic
 "---------------------------
@@ -96,7 +98,7 @@ let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
 let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
 let g:syntastic_javascript_checkers = ["eslint"]
 let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_go_checkers = ['gofmt', 'golint', 'govet']
+let g:syntastic_go_checkers = ['golint', 'gofmt']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -169,10 +171,11 @@ let g:DevIconsDefaultFolderOpenSymbol = ''
 " tagbar
 "---------------------------
 let g:tagbar_compact = 1 " no help
-let g:tagbar_autofocus = 1
+let g:tagbar_autofocus = 0
 let g:tagbar_width = 20 "tagbar width
 nmap <F2> :TagbarToggle<CR>
-autocmd FileType * nested :call tagbar#autoopen(0) "auto open tagbar
+"autocmd FileType * nested :call tagbar#autoopen(0) "auto open tagbar
+autocmd VimEnter * nested :TagbarOpen
 "---------------------------
 " C++
 "---------------------------
@@ -200,3 +203,6 @@ let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_metalinter_command='golangci-lint'
+let g:go_metalinter_autosave = 1
+" let g:go_metalinter_autosave_enabled = ['vet']
