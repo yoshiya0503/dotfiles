@@ -28,6 +28,8 @@ Plug 'othree/html5.vim' " html5
 Plug 'hail2u/vim-css3-syntax' " css3
 Plug 'mxw/vim-jsx' " JSX
 Plug 'posva/vim-vue' " Vue
+Plug 'leafgarland/typescript-vim'
+"Plug 'sekel/vim-vue-syntastic' " Vue Syntastic
 Plug 'StanAngeloff/php.vim' " php
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'elzr/vim-json' " json
@@ -83,7 +85,8 @@ nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
 syntax on " syntax hilight
-colorscheme gruvbox
+"colorscheme gruvbox
+colorscheme molokai
 let g:airline_theme = "dark" " airline color
 " highlight LineNr ctermfg=190
 "---------------------------
@@ -97,12 +100,17 @@ let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
 " use python-mode
 let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
 let g:syntastic_javascript_checkers = ["eslint"]
+let g:syntastic_typescript_checkers = ["eslint"]
+let g:syntastic_vue_checkers = ['eslint']
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_go_checkers = ['golint', 'gofmt']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+let g:syntastic_vue_eslint_exe = '$(npm bin)/eslint'
+let g:syntastic_typescript_eslint_exe = '$(npm bin)/eslint'
 "---------------------------
 "C++ compiler. using clang++ (quickrun)
 "---------------------------
@@ -167,6 +175,7 @@ let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
 "---------------------------
 " tagbar
 "---------------------------
@@ -185,12 +194,14 @@ let g:cpp_class_decl_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 "---------------------------
-" js, css, html, ruby
+" js, ts, vue, css, html, ruby
 "---------------------------
 let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
 let g:javascript_plugin_jsdoc = 1
 autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -203,6 +214,6 @@ let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_metalinter_command='golangci-lint'
-let g:go_metalinter_autosave = 1
+" let g:go_metalinter_command='golangci-lint'
+" let g:go_metalinter_autosave = 1
 " let g:go_metalinter_autosave_enabled = ['vet']
