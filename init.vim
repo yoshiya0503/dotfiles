@@ -11,13 +11,14 @@ Plug 'scrooloose/syntastic' " syntax check
 Plug 'Shougo/neosnippet.vim' " code snippets
 Plug 'Shougo/neosnippet-snippets' " snippets file
 Plug 'Shougo/deoplete.nvim' " completion
-Plug 'davidhalter/jedi-vim' " python completion
+"Plug 'davidhalter/jedi-vim' " python completion
 Plug 'NigoroJr/rsense'      " ruby completion
 Plug 'scrooloose/nerdtree' " filer
 Plug 'majutsushi/tagbar'   " tagbar
 Plug 'thinca/vim-quickrun' " quick run
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " nerd color
 Plug 'vim-airline/vim-airline'  " status bar
+Plug 'vim-airline/vim-airline-themes' " status bar theme
 Plug 'octol/vim-cpp-enhanced-highlight' " C++
 Plug 'python-mode/python-mode', { 'branch': 'develop' } " python
 Plug 'vim-ruby/vim-ruby' " ruby
@@ -37,6 +38,8 @@ Plug 'plasticboy/vim-markdown' " markdown
 Plug 'godlygeek/tabular' " table markdown
 Plug 'tomasr/molokai' " color scheme
 Plug 'morhetz/gruvbox' " colorscheme
+Plug 'altercation/vim-colors-solarized' " color_shceme
+Plug 'NLKNguyen/papercolor-theme' " color_scheme
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
@@ -84,10 +87,15 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
-syntax on " syntax hilight
-"colorscheme gruvbox
-colorscheme molokai
-let g:airline_theme = "dark" " airline color
+syntax enable " syntax hilight
+set background=dark
+" colorscheme gruvbox
+" colorscheme molokai
+" colorscheme solarized
+colorscheme PaperColor
+" let g:solarized_termcolors=256
+" let g:airline_theme = 'dark' " airline color
+let g:airline_theme='papercolor'
 " highlight LineNr ctermfg=190
 "---------------------------
 " syntastic
