@@ -6,6 +6,7 @@
 "---------------------------
 " vim-plug package manager
 "---------------------------
+"
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/syntastic' " syntax check
 Plug 'Shougo/neosnippet.vim' " code snippets
@@ -36,10 +37,9 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'elzr/vim-json' " json
 Plug 'plasticboy/vim-markdown' " markdown
 Plug 'godlygeek/tabular' " table markdown
-Plug 'tomasr/molokai' " color scheme
-Plug 'morhetz/gruvbox' " colorscheme
-Plug 'altercation/vim-colors-solarized' " color_shceme
-Plug 'NLKNguyen/papercolor-theme' " color_scheme
+Plug 'yoshiya0503/papercolor-theme' " color_scheme
+Plug 'altercation/vim-colors-solarized' " color_scheme
+Plug 'morhetz/gruvbox' " color_scheme
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
@@ -87,16 +87,14 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
-syntax enable " syntax hilight
 set background=dark
-" colorscheme gruvbox
-" colorscheme molokai
+syntax enable " syntax hilight
+colorscheme gruvbox
+" colorscheme PaperColor
+" let g:airline_theme='papercolor'
 " colorscheme solarized
-colorscheme PaperColor
-" let g:solarized_termcolors=256
-" let g:airline_theme = 'dark' " airline color
-let g:airline_theme='papercolor'
-" highlight LineNr ctermfg=190
+let g:airline_theme='solarized'
+"highlight LineNr ctermfg=190
 "---------------------------
 " syntastic
 "---------------------------
@@ -111,7 +109,7 @@ let g:syntastic_javascript_checkers = ["eslint"]
 let g:syntastic_typescript_checkers = ["eslint"]
 let g:syntastic_vue_checkers = ['eslint']
 let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_go_checkers = ['golint', 'gofmt']
+let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'gofmt', 'gotype']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -202,6 +200,11 @@ let g:cpp_class_decl_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 "---------------------------
+" python
+"---------------------------
+let g:pymode_python = 'python3'
+let g:pymode_options_max_line_length = 120
+"---------------------------
 " js, ts, vue, css, html, ruby
 "---------------------------
 let g:jsx_ext_required = 0
@@ -216,12 +219,14 @@ autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 "---------------------------
 " golang
 "---------------------------
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_build_constraints = 1
-" let g:go_metalinter_command='golangci-lint'
-" let g:go_metalinter_autosave = 1
-" let g:go_metalinter_autosave_enabled = ['vet']
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
