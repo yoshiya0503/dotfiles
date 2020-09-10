@@ -6,9 +6,8 @@
 "---------------------------
 " vim-plug package manager
 "---------------------------
-"
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'scrooloose/syntastic' " syntax check
+Plug 'dense-analysis/ale' " syntax check
 Plug 'Shougo/neosnippet.vim' " code snippets
 Plug 'Shougo/neosnippet-snippets' " snippets file
 Plug 'Shougo/deoplete.nvim' " completion
@@ -21,7 +20,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " nerd color
 Plug 'vim-airline/vim-airline'  " status bar
 Plug 'vim-airline/vim-airline-themes' " status bar theme
 Plug 'octol/vim-cpp-enhanced-highlight' " C++
-Plug 'python-mode/python-mode', { 'branch': 'develop' } " python
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } " python
 Plug 'vim-ruby/vim-ruby' " ruby
 Plug 'tpope/vim-rails' " rails
 Plug 'pangloss/vim-javascript' " javascript indent
@@ -31,15 +30,15 @@ Plug 'hail2u/vim-css3-syntax' " css3
 Plug 'mxw/vim-jsx' " JSX
 Plug 'posva/vim-vue' " Vue
 Plug 'leafgarland/typescript-vim'
-"Plug 'sekel/vim-vue-syntastic' " Vue Syntastic
 Plug 'StanAngeloff/php.vim' " php
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'elzr/vim-json' " json
 Plug 'plasticboy/vim-markdown' " markdown
 Plug 'godlygeek/tabular' " table markdown
-Plug 'yoshiya0503/papercolor-theme' " color_scheme
 Plug 'altercation/vim-colors-solarized' " color_scheme
+Plug 'joshdick/onedark.vim' " color_scheme
 Plug 'morhetz/gruvbox' " color_scheme
+Plug 'ayu-theme/ayu-vim' " color_scheme
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
@@ -87,53 +86,49 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
-set background=dark
+" set background=dark
 syntax enable " syntax hilight
-colorscheme gruvbox
-" colorscheme PaperColor
-" let g:airline_theme='papercolor'
+" colorscheme gruvbox
+set termguicolors
+" let ayucolor="mirage"
+colorscheme onedark
+let g:airline_theme='onedark'
 " colorscheme solarized
-let g:airline_theme='solarized'
-"highlight LineNr ctermfg=190
+highlight LineNr guifg=lime
 "---------------------------
-" syntastic
+" ALE
 "---------------------------
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_cpp_compiler = "clang++"
-let g:syntastic_cpp_compiler_options = "--std=c++11 --stdlib=libc++"
-" use python-mode
-let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
-let g:syntastic_javascript_checkers = ["eslint"]
-let g:syntastic_typescript_checkers = ["eslint"]
-let g:syntastic_vue_checkers = ['eslint']
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'gofmt', 'gotype']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-let g:syntastic_vue_eslint_exe = '$(npm bin)/eslint'
-let g:syntastic_typescript_eslint_exe = '$(npm bin)/eslint'
+autocmd FileType python :ALEToggle
+let g:airline#extensions#ale#enabled = 1
+let g:ale_open_list = 1
+let g:ale_lint_on_open = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_linter_aliases = {'typescriptreact': 'typescript'}
+let g:ale_fixers = { 'ruby': ['rubocop'] }
 "---------------------------
-"C++ compiler. using clang++ (quickrun)
+"C++/typescript compiler. using clang++ (quickrun)
 "---------------------------
 let g:quickrun_config = {}
-if executable("clang++")
-    let g:quickrun_config["cpp/clang++11"] = {
-                \ "cmdopt": "--std=c++11 --stdlib=libc++",
-                \ "type": "cpp/clang++"
-                \ }
-    let g:quickrun_config["cpp"] = {"type": "cpp/clang++11"}
-endif
+let g:quickrun_config["cpp"] = {"type": "cpp/clang++11"}
+let g:quickrun_config['typescript'] = { 'type' : 'typescript/tsc' }
+let g:quickrun_config["cpp/clang++11"] = {
+            \ "cmdopt": "--std=c++11 --stdlib=libc++",
+            \ "type": "cpp/clang++"
+            \ }
+let g:quickrun_config['typescript/tsc'] = {
+            \   'command': 'tsc',
+            \   'exec': ['%c --target esnext --module commonjs %o %s', 'node %s:r.js'],
+            \   'tempfile': '%{tempname()}.ts',
+            \   'hook/sweep/files': ['%S:p:r.js'],
+            \ }
 "---------------------------
 " deoplete and snippet
 "---------------------------
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#num_processes = 1
 "---------------------------
 " snippet
 "---------------------------
