@@ -1,16 +1,14 @@
 "---------------------------
 " @title nvim/init.vim
 " @author Yoshiya Ito
-" @version 2.0.0
+" @version 3.0.0
 "---------------------------
 "---------------------------
 " vim-plug package manager
 "---------------------------
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'dense-analysis/ale' " syntax check
-Plug 'Shougo/neosnippet.vim' " code snippets
-Plug 'Shougo/neosnippet-snippets' " snippets file
-Plug 'Shougo/deoplete.nvim' " completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'davidhalter/jedi-vim' " python completion
 Plug 'NigoroJr/rsense'      " ruby completion
 Plug 'scrooloose/nerdtree' " filer
@@ -96,7 +94,7 @@ let g:airline_theme='onedark'
 " colorscheme solarized
 highlight LineNr guifg=lime
 "---------------------------
-" ALE
+" ALE syntax checker
 "---------------------------
 set statusline+=%=
 set statusline+=\ %{LinterStatus()}
@@ -126,22 +124,23 @@ let g:quickrun_config['typescript/tsc'] = {
             \   'hook/sweep/files': ['%S:p:r.js'],
             \ }
 "---------------------------
-" deoplete and snippet
+" coc intellisence completion
 "---------------------------
-let g:deoplete#enable_at_startup = 1
-"---------------------------
-" snippet
-"---------------------------
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" for snippet_complete marker
-if has("conceal")
-    set conceallevel=2 concealcursor=i "enable neosnippet
-endif
-let g:neosnippet#snippets_directory="~/.config/nvim/snippets" "snippet directory
+let g:coc_global_extensions = [
+      \  'coc-clangd'
+      \, 'coc-java'
+      \, 'coc-go'
+      \, 'coc-python'
+      \, 'coc-solargraph'
+      \, 'coc-tsserver'
+      \, 'coc-vetur'
+      \, 'coc-json'
+      \, 'coc-yaml'
+      \, 'coc-html'
+      \, 'coc-css'
+      \, 'coc-phpls'
+      \, 'coc-snippets'
+      \ ]
 "---------------------------
 "airline
 "---------------------------
@@ -166,10 +165,10 @@ let g:airline#extensions#tabline#enabled = 1
 "---------------------------
 autocmd VimEnter * NERDTree | wincmd p " auto mode
 let NERDTreeMinimalUI = 1     " no help
+let NERDTreeWinSize=20        " tree width
 let g:NERDTreeShowHidden=1    " display hidden file
 let g:NERDTreeDirArrows=1     " tree style
 let g:NERDTreeShowBookmarks=1 " book marks
-let NERDTreeWinSize=20        " tree width
 let g:webdevicons_conceal_nerdtree_brackets = 1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
