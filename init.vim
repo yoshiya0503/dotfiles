@@ -8,8 +8,8 @@
 "---------------------------
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'dense-analysis/ale' " syntax check
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'davidhalter/jedi-vim' " python completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " syntax files
+Plug 'editorconfig/editorconfig-vim' " editor config
 Plug 'NigoroJr/rsense'      " ruby completion
 Plug 'scrooloose/nerdtree' " filer
 Plug 'majutsushi/tagbar'   " tagbar
@@ -25,18 +25,18 @@ Plug 'pangloss/vim-javascript' " javascript indent
 Plug 'jelera/vim-javascript-syntax' " javascript syntax
 Plug 'othree/html5.vim' " html5
 Plug 'hail2u/vim-css3-syntax' " css3
-Plug 'mxw/vim-jsx' " JSX
 Plug 'posva/vim-vue' " Vue
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim' " typescript
+Plug 'maxmellon/vim-jsx-pretty' " jsx/tsx
 Plug 'StanAngeloff/php.vim' " php
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'elzr/vim-json' " json
 Plug 'plasticboy/vim-markdown' " markdown
 Plug 'godlygeek/tabular' " table markdown
+Plug 'EdenEast/nightfox.nvim' " color_scheme
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' } " color_scheme
 Plug 'altercation/vim-colors-solarized' " color_scheme
 Plug 'joshdick/onedark.vim' " color_scheme
-Plug 'morhetz/gruvbox' " color_scheme
-Plug 'ayu-theme/ayu-vim' " color_scheme
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
@@ -63,7 +63,11 @@ set showcmd
 set lazyredraw             " scroll speed up?
 set cinoptions+=:0,g0      " c indent setting
 set clipboard+=unnamedplus " use clipbord
-set hlsearch               " hilight search
+set hlsearch               " highlight search
+set cmdheight=1
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
 autocmd BufWritePre * :%s/\s\+$//ge " remove trailing whitespace
 " key remap
 inoremap <silent> jj <esc>
@@ -84,15 +88,20 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
-" set background=dark
-syntax enable " syntax hilight
-" colorscheme gruvbox
+syntax enable " syntax highlight
+set background=dark
 set termguicolors
-" let ayucolor="mirage"
-colorscheme onedark
+let g:onedark_termcolors=256
 let g:airline_theme='onedark'
-" colorscheme solarized
-highlight LineNr guifg=lime
+" colorscheme tokyonight
+colorscheme onedark
+" colorscheme nightfox
+highlight LineNr guifg=lime guibg=NONE guifg=lime
+highlight QuickFixLine ctermbg=NONE guibg=NONE
+highlight SignColumn ctermbg=NONE guibg=NONE
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NormalNC ctermbg=NONE guibg=NONE guifg=None
+
 "---------------------------
 " ALE syntax checker
 "---------------------------
@@ -105,8 +114,9 @@ let g:ale_open_list = 1
 let g:ale_lint_on_open = 1
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
+let b:ale_linters = ['flake8', 'pylint']
 let g:ale_linter_aliases = {'typescriptreact': 'typescript'}
-let g:ale_fixers = { 'ruby': ['rubocop'] }
+let g:ale_fixers = { 'ruby': ['rubocop'], 'python': ['autopep8'] }
 "---------------------------
 "C++/typescript compiler. using clang++ (quickrun)
 "---------------------------
@@ -126,11 +136,23 @@ let g:quickrun_config['typescript/tsc'] = {
 "---------------------------
 " coc intellisence completion
 "---------------------------
+" let g:coc_start_at_startup = v:false
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 let g:coc_global_extensions = [
       \  'coc-clangd'
       \, 'coc-java'
       \, 'coc-go'
-      \, 'coc-python'
+      \, 'coc-pyright'
       \, 'coc-solargraph'
       \, 'coc-tsserver'
       \, 'coc-vetur'
@@ -140,6 +162,7 @@ let g:coc_global_extensions = [
       \, 'coc-css'
       \, 'coc-phpls'
       \, 'coc-snippets'
+      \, 'coc-tailwindcss'
       \ ]
 "---------------------------
 "airline
@@ -196,16 +219,21 @@ let g:cpp_concepts_highlight = 1
 "---------------------------
 " python
 "---------------------------
+" let g:pymode = 0
 let g:pymode_python = 'python3'
 let g:pymode_options_max_line_length = 120
+" let g:pymode_lint_checkers = ['pylint', 'pep8']
 "---------------------------
-" js, ts, vue, css, html, ruby
+" js, ts, tsx, vue, css, html, ruby
 "---------------------------
-let g:jsx_ext_required = 0
 let g:javascript_plugin_flow = 1
 let g:javascript_plugin_jsdoc = 1
+autocmd bufnewfile,bufread *.tsx set filetype=typescript.tsx
+autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
 autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType typescript.tsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType javascript.jsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
