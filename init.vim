@@ -9,14 +9,15 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " syntax check and completion files
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " improve syntax
+" Plug 'dense-analysis/ale' " syntax check
 Plug 'editorconfig/editorconfig-vim' " editor config
 Plug 'honza/vim-snippets' " vim snippets
-Plug 'scrooloose/nerdtree' " filer
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua' " filer
+Plug 'lukas-reineke/indent-blankline.nvim' " show indent
 Plug 'majutsushi/tagbar'   " tagbar
 Plug 'thinca/vim-quickrun' " quick run
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " nerd color
-Plug 'vim-airline/vim-airline'  " status bar
-Plug 'vim-airline/vim-airline-themes' " status bar theme
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } " python
 Plug 'tpope/vim-rails' " rails
 Plug 'NigoroJr/rsense' " ruby completion
@@ -30,7 +31,8 @@ Plug 'altercation/vim-colors-solarized' " color_scheme
 Plug 'joshdick/onedark.vim' " color_scheme
 Plug 'rebelot/kanagawa.nvim' " color_scheme
 Plug 'tomasr/molokai' " color_scheme
-Plug 'ryanoasis/vim-devicons' " icons
+Plug 'ayu-theme/ayu-vim' " color_scheme
+Plug 'kaicataldo/material.vim', { 'branch': 'main' } " color_scheme
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
 "---------------------------
@@ -61,6 +63,7 @@ set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+set fillchars+=vert:\.
 autocmd BufWritePre * :%s/\s\+$//ge " remove trailing whitespace
 " key remap
 inoremap <silent> jj <esc>
@@ -78,7 +81,7 @@ nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
 " tab
-nnoremap tt :<C-u>tabnew<CR>:<C-u>NERDTree<CR>:<C-u>Tagbar<Cr>
+nnoremap tt :<C-u>tabnew<CR>:<C-u>NvimTreeOpen<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
 syntax enable " syntax highlight
@@ -86,13 +89,14 @@ set background=dark
 set termguicolors
 " let g:onedark_termcolors=256
 " let g:solarized_termcolors=256
-let g:airline_theme='onedark'
-" let g:airline_theme='solarized'
 " colorscheme tokyonight
 " colorscheme onedark
-" colorscheme kanagawa
+"let ayucolor="mirage"
+" colorscheme ayu
+" colorscheme material
+colorscheme kanagawa
 " colorscheme nightfox
-colorscheme molokai
+" colorscheme molokai
 " colorscheme solarized
 highlight LineNr guifg=lime guibg=NONE
 highlight VertSplit guifg=lime guibg=NONE
@@ -100,12 +104,21 @@ highlight QuickFixLine ctermbg=NONE guibg=NONE
 highlight SignColumn ctermbg=NONE guibg=NONE
 highlight Normal ctermbg=NONE guifg=NONE guibg=NONE
 highlight NormalNC ctermbg=NONE guibg=NONE guifg=None
+"---------------------------
+" tree sitter config
+"---------------------------
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",
+  ignore_install = { "phpdoc", "tree-sitter-phpdoc" },
   highlight = {
     enable = true,
     disable = {"html", "css"},
-    }
+  },
+  indent = {
+    enable = true,
+    disable = {"python"},
+  }
 }
 EOF
 "---------------------------
@@ -115,15 +128,15 @@ let g:quickrun_config = {}
 let g:quickrun_config["cpp"] = {"type": "cpp/clang++11"}
 let g:quickrun_config['typescript'] = { 'type' : 'typescript/tsc' }
 let g:quickrun_config["cpp/clang++11"] = {
-            \ "cmdopt": "--std=c++11 --stdlib=libc++",
-            \ "type": "cpp/clang++"
-            \ }
+      \ "cmdopt": "--std=c++11 --stdlib=libc++",
+      \ "type": "cpp/clang++"
+      \ }
 let g:quickrun_config['typescript/tsc'] = {
-            \   'command': 'tsc',
-            \   'exec': ['%c --target esnext --module commonjs %o %s', 'node %s:r.js'],
-            \   'tempfile': '%{tempname()}.ts',
-            \   'hook/sweep/files': ['%S:p:r.js'],
-            \ }
+      \   'command': 'tsc',
+      \   'exec': ['%c --target esnext --module commonjs %o %s', 'node %s:r.js'],
+      \   'tempfile': '%{tempname()}.ts',
+      \   'hook/sweep/files': ['%S:p:r.js'],
+      \ }
 "---------------------------
 " coc syntax checker and intellisence completion
 "---------------------------
@@ -156,46 +169,85 @@ let g:coc_global_extensions = [
       \ ]
 imap <C-l> <Plug>(coc-snippets-expand)
 "---------------------------
-"airline
+" ALE
 "---------------------------
-let g:airline_powerline_fonts = 1
-let g:airline_detect_modified=1
-let g:airline_detect_paste=1
-let g:airline_symbols = {}
-let g:airline_left_sep = ""
-let g:airline_left_alt_sep = ""
-let g:airline_right_sep = ""
-let g:airline_right_alt_sep = ""
-let g:airline_symbols.branch = ""
-let g:airline_symbols.readonly = ""
-let g:airline_symbols.linenr = ""
-let g:airline#extensions#tagbar#enabled = 0
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
+
 "---------------------------
-" nerdtree and devicons
+" status line
 "---------------------------
-autocmd VimEnter * NERDTree | wincmd p " auto mode
-let NERDTreeMinimalUI = 1     " no help
-let NERDTreeWinSize=20        " tree width
-let g:NERDTreeShowHidden=1    " display hidden file
-let g:NERDTreeDirArrows=1     " tree style
-let g:NERDTreeShowBookmarks=1 " book marks
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-let g:DevIconsDefaultFolderOpenSymbol = ''
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+lua <<EOF
+require('lualine').setup {
+  options = {
+    section_separators = { left = "", right = "" },
+    component_separators = { left = "", right = "" },
+  },
+  sections = {
+    lualine_a = {
+      {
+        'filename',
+        symbols = {
+          readonly = '[]'
+        }
+      }
+    },
+  },
+  tabline = {
+    lualine_a = {'buffers'},
+    lualine_b = {'branch'},
+    lualine_c = {'filename'},
+    lualine_z = {'tabs'}
+  }
+}
+EOF
+"---------------------------
+" tree
+"---------------------------
+let g:nvim_tree_icons = { 'default': '' }
+let g:nvim_tree_highlight_opened_files = 1
+" autocmd vimenter * nested :nvimtreetoggle
+nnoremap <C-n> :NvimTreeToggle<CR>
+lua <<eof
+require'nvim-tree'.setup {
+   open_on_setup = true,
+   open_on_tab = true,
+   view = {
+    width = 20,
+    side = "left",
+    mappings = {
+      list = {
+        { key = "v", action = "vsplit" },
+        { key = "o", action = "split" },
+        { key = "<c-s>", action = "system_open" },
+        { key = "u", action = "dir_up" },
+        { key = "s", action = "" },
+      },
+    },
+  },
+}
+eof
+"---------------------------
+" indent
+"---------------------------
+lua <<EOF
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+}
+-- vim.opt.list = true
+-- vim.opt.listchars:append("space:⋅")
+-- vim.opt.listchars:append("eol:↴")
+EOF
+
 "---------------------------
 " tagbar
 "---------------------------
 let g:tagbar_compact = 1 " no help
 let g:tagbar_autofocus = 0
-let g:tagbar_width = 20 "tagbar width
-nmap <F2> :TagbarToggle<CR>
-"autocmd FileType * nested :call tagbar#autoopen(0) "auto open tagbar
+let g:tagbar_width = 20 " tagbar width
+let g:tagbar_map_togglesort = 'S' " sort
+nmap <C-t> :TagbarToggle<CR>
+autocmd FileType * nested :call tagbar#autoopen(0) "auto open tagbar
 autocmd VimEnter * nested :TagbarOpen
 "---------------------------
 " pymode
@@ -204,6 +256,10 @@ autocmd VimEnter * nested :TagbarOpen
 let g:pymode_python = 'python3'
 let g:pymode_options_max_line_length = 120
 " let g:pymode_lint_checkers = ['pylint', 'pep8']
+"---------------------------
+" vim-go
+"---------------------------
+let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
@@ -217,3 +273,5 @@ autocmd! FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType lua setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2
