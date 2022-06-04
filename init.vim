@@ -94,9 +94,9 @@ set termguicolors
 "let ayucolor="mirage"
 " colorscheme ayu
 " colorscheme material
-colorscheme kanagawa
+" colorscheme kanagawa
 " colorscheme nightfox
-" colorscheme molokai
+colorscheme molokai
 " colorscheme solarized
 highlight LineNr guifg=lime guibg=NONE
 highlight VertSplit guifg=lime guibg=NONE
