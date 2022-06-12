@@ -166,6 +166,7 @@ let g:coc_global_extensions = [
       \, 'coc-phpls'
       \, 'coc-snippets'
       \, 'coc-tailwindcss'
+      \, 'coc-prettier'
       \ ]
 imap <C-l> <Plug>(coc-snippets-expand)
 "---------------------------
@@ -202,14 +203,15 @@ EOF
 "---------------------------
 " tree
 "---------------------------
-let g:nvim_tree_icons = { 'default': '' }
-let g:nvim_tree_highlight_opened_files = 1
-" autocmd vimenter * nested :nvimtreetoggle
 nnoremap <C-n> :NvimTreeToggle<CR>
-lua <<eof
+lua <<EOF
 require'nvim-tree'.setup {
    open_on_setup = true,
+   open_on_setup_file = true,
    open_on_tab = true,
+   renderer = {
+     highlight_opened_files = "all",
+   },
    view = {
     width = 20,
     side = "left",
@@ -224,7 +226,7 @@ require'nvim-tree'.setup {
     },
   },
 }
-eof
+EOF
 "---------------------------
 " indent
 "---------------------------
@@ -266,8 +268,10 @@ let g:go_metalinter_command='golangci-lint run'
 autocmd bufnewfile,bufread *.tsx set filetype=typescript.tsx
 autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
 autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType typescript.tsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
+"autocmd! FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" autocmd! FileType typescript.tsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType javascript.jsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
