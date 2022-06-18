@@ -1,7 +1,7 @@
 "---------------------------
 " @title nvim/init.vim
 " @author Yoshiya Ito
-" @version 4.0.0
+" @version 6.0.0
 "---------------------------
 "---------------------------
 " vim-plug package manager
