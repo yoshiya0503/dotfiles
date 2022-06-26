@@ -1,7 +1,7 @@
 "---------------------------
 " @title nvim/init.vim
 " @author Yoshiya Ito
-" @version 6.0.0
+" @version 4.0.0
 "---------------------------
 "---------------------------
 " vim-plug package manager
@@ -55,11 +55,9 @@ set expandtab
 set smarttab
 set showmatch
 set showcmd
-set lazyredraw             " scroll speed up?
 set cinoptions+=:0,g0      " c indent setting
 set clipboard+=unnamedplus " use clipbord
 set hlsearch               " highlight search
-set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
