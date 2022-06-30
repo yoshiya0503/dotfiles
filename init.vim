@@ -1,38 +1,37 @@
 "---------------------------
 " @title nvim/init.vim
 " @author Yoshiya Ito
-" @version 4.0.0
+" @version 5.0.0
 "---------------------------
 "---------------------------
 " vim-plug package manager
 "---------------------------
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " syntax check and completion files
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " improve syntax
-" Plug 'dense-analysis/ale' " syntax check
-Plug 'editorconfig/editorconfig-vim' " editor config
-Plug 'honza/vim-snippets' " vim snippets
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'neovim/nvim-lspconfig' " LSP
+Plug 'williamboman/nvim-lsp-installer' " LSP installer
+Plug 'hrsh7th/nvim-cmp' " completion LSP
+Plug 'hrsh7th/cmp-nvim-lsp' " completion LSP source
+Plug 'hrsh7th/cmp-buffer' " completion LSP file buffer
+Plug 'hrsh7th/cmp-path' " completion LSP file path
+Plug 'hrsh7th/cmp-cmdline' " completion LSP vim command
+Plug 'onsails/lspkind.nvim' " completion Icon
+Plug 'liuchengxu/vista.vim' " ctags outline
+Plug 'L3MON4D3/LuaSnip' " code snippet
+Plug 'saadparwaiz1/cmp_luasnip' " code snippet to cmp
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax hilight
+Plug 'kyazdani42/nvim-web-devicons' " icon
 Plug 'kyazdani42/nvim-tree.lua' " filer
 Plug 'lukas-reineke/indent-blankline.nvim' " show indent
-Plug 'majutsushi/tagbar'   " tagbar
+Plug 'folke/trouble.nvim' " trouble shooting
+Plug 'editorconfig/editorconfig-vim' " editor config
 Plug 'thinca/vim-quickrun' " quick run
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } " python
-Plug 'tpope/vim-rails' " rails
-Plug 'NigoroJr/rsense' " ruby completion
-Plug 'posva/vim-vue' " Vue
+Plug 'nvim-lualine/lualine.nvim' " status line
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' } " ts code formatter
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } " go
-Plug 'plasticboy/vim-markdown' " markdown
-Plug 'godlygeek/tabular' " table markdown
-Plug 'EdenEast/nightfox.nvim' " color_scheme
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' } " color_scheme
-Plug 'altercation/vim-colors-solarized' " color_scheme
 Plug 'joshdick/onedark.vim' " color_scheme
 Plug 'rebelot/kanagawa.nvim' " color_scheme
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'tomasr/molokai' " color_scheme
-Plug 'ayu-theme/ayu-vim' " color_scheme
-Plug 'kaicataldo/material.vim', { 'branch': 'main' } " color_scheme
 Plug 'tpope/vim-fugitive' " git
 call plug#end()
 "---------------------------
@@ -48,9 +47,9 @@ set noswapfile    " no swap
 set cindent       " indent
 set autoindent
 set smartindent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 set smarttab
 set showmatch
@@ -82,26 +81,139 @@ nnoremap sH <C-w>H
 nnoremap tt :<C-u>tabnew<CR>:<C-u>NvimTreeOpen<CR>:<C-u>Tagbar<Cr>
 nnoremap tl gt
 nnoremap th gT
+"---------------------------
+" colorscheme
+"---------------------------
+lua <<EOF
+-- vim.g.tokyonight_style = "night"
+-- vim.g.tokyonight_transparent_sidebar = true
+EOF
 syntax enable " syntax highlight
 set background=dark
 set termguicolors
-" let g:onedark_termcolors=256
-" let g:solarized_termcolors=256
 " colorscheme tokyonight
-" colorscheme onedark
-"let ayucolor="mirage"
-" colorscheme ayu
-" colorscheme material
 " colorscheme kanagawa
-" colorscheme nightfox
 colorscheme molokai
-" colorscheme solarized
 highlight LineNr guifg=lime guibg=NONE
 highlight VertSplit guifg=lime guibg=NONE
 highlight QuickFixLine ctermbg=NONE guibg=NONE
 highlight SignColumn ctermbg=NONE guibg=NONE
 highlight Normal ctermbg=NONE guifg=NONE guibg=NONE
 highlight NormalNC ctermbg=NONE guibg=NONE guifg=None
+"---------------------------
+" LSP config
+"---------------------------
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+lua <<EOF
+local on_attach = function(client, bufnr)
+  local opts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local lspconfig = require'lspconfig'
+local lsp_installer = require "nvim-lsp-installer"
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+lsp_installer.setup {
+  automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+  ui = {
+    icons = {
+      server_installed = "✓",
+      server_pending = "➜",
+      server_uninstalled = "✗"
+    }
+  }
+}
+for _, server in ipairs(lsp_installer.get_installed_servers()) do
+  lspconfig[server.name].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+end
+EOF
+"---------------------------
+" completion config
+"---------------------------
+lua <<EOF
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
+  }),
+  formatting = {
+    format = lspkind.cmp_format({
+      maxwidth = 50,
+    })
+  }
+}
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+--cmp.setup.cmdline(':', {
+--  mapping = cmp.mapping.preset.cmdline(),
+--  sources = cmp.config.sources({
+--    { name = 'path' }
+--  }, {
+--    { name = 'cmdline' }
+--  })
+--})
+EOF
 "---------------------------
 " tree sitter config
 "---------------------------
@@ -136,43 +248,7 @@ let g:quickrun_config['typescript/tsc'] = {
       \   'hook/sweep/files': ['%S:p:r.js'],
       \ }
 "---------------------------
-" coc syntax checker and intellisence completion
-"---------------------------
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_global_extensions = [
-      \  'coc-clangd'
-      \, 'coc-java'
-      \, 'coc-go'
-      \, 'coc-pyright'
-      \, 'coc-solargraph'
-      \, 'coc-tsserver'
-      \, 'coc-vetur'
-      \, 'coc-json'
-      \, 'coc-yaml'
-      \, 'coc-html'
-      \, 'coc-css'
-      \, 'coc-phpls'
-      \, 'coc-snippets'
-      \, 'coc-tailwindcss'
-      \, 'coc-prettier'
-      \ ]
-imap <C-l> <Plug>(coc-snippets-expand)
-"---------------------------
-" ALE
-"---------------------------
-
-"---------------------------
-" status line
+" status lualine
 "---------------------------
 lua <<EOF
 require('lualine').setup {
@@ -199,7 +275,7 @@ require('lualine').setup {
 }
 EOF
 "---------------------------
-" tree
+" tree filter
 "---------------------------
 nnoremap <C-n> :NvimTreeToggle<CR>
 lua <<EOF
@@ -226,6 +302,18 @@ require'nvim-tree'.setup {
 }
 EOF
 "---------------------------
+" trouble
+"---------------------------
+lua << EOF
+  require("trouble").setup {
+    padding = false,
+    height = 6,
+    auto_open = true, -- automatically open the list when you have diagnostics
+    auto_close = true, -- automatically close the list when you have no diagnostics
+  }
+EOF
+nnoremap TT <cmd>TroubleToggle<cr>
+"---------------------------
 " indent
 "---------------------------
 lua <<EOF
@@ -238,24 +326,13 @@ require("indent_blankline").setup {
 -- vim.opt.listchars:append("space:⋅")
 -- vim.opt.listchars:append("eol:↴")
 EOF
-
 "---------------------------
-" tagbar
+" vista ctags
 "---------------------------
-let g:tagbar_compact = 1 " no help
-let g:tagbar_autofocus = 0
-let g:tagbar_width = 20 " tagbar width
-let g:tagbar_map_togglesort = 'S' " sort
-nmap <C-t> :TagbarToggle<CR>
-autocmd FileType * nested :call tagbar#autoopen(0) "auto open tagbar
-autocmd VimEnter * nested :TagbarOpen
-"---------------------------
-" pymode
-"---------------------------
-" let g:pymode = 0
-let g:pymode_python = 'python3'
-let g:pymode_options_max_line_length = 120
-" let g:pymode_lint_checkers = ['pylint', 'pep8']
+let g:vista_default_executive = 'ctags'
+let g:vista_stay_on_open = 0
+let g:vista_finder_alternative_executives = 'nvim_lsp'
+autocmd VimEnter * Vista
 "---------------------------
 " vim-go
 "---------------------------
@@ -263,17 +340,5 @@ let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
-autocmd bufnewfile,bufread *.tsx set filetype=typescript.tsx
-autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
-autocmd! FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-"autocmd! FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
-" autocmd! FileType typescript.tsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType javascript.jsx setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType lua setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd! FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2
