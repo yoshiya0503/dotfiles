@@ -18,14 +18,16 @@ Plug 'onsails/lspkind.nvim' " completion Icon
 Plug 'liuchengxu/vista.vim' " ctags outline
 Plug 'L3MON4D3/LuaSnip' " code snippet
 Plug 'saadparwaiz1/cmp_luasnip' " code snippet to cmp
+Plug 'rafamadriz/friendly-snippets' " snippet set
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax hilight
 Plug 'kyazdani42/nvim-web-devicons' " icon
 Plug 'kyazdani42/nvim-tree.lua' " filer
+Plug 'rcarriga/nvim-notify' " notification
 Plug 'lukas-reineke/indent-blankline.nvim' " show indent
 Plug 'folke/trouble.nvim' " trouble shooting
 Plug 'editorconfig/editorconfig-vim' " editor config
-Plug 'thinca/vim-quickrun' " quick run
 Plug 'nvim-lualine/lualine.nvim' " status line
+Plug 'michaelb/sniprun', {'do': 'bash install.sh 1 >> /tmp/log 2>&1'}
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' } " ts code formatter
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } " go
 Plug 'joshdick/onedark.vim' " color_scheme
@@ -113,16 +115,6 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -154,6 +146,7 @@ lua <<EOF
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
+require 'luasnip.loaders.from_vscode'.lazy_load()
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -205,14 +198,6 @@ cmp.setup.cmdline('/', {
     { name = 'buffer' }
   }
 })
---cmp.setup.cmdline(':', {
---  mapping = cmp.mapping.preset.cmdline(),
---  sources = cmp.config.sources({
---    { name = 'path' }
---  }, {
---    { name = 'cmdline' }
---  })
---})
 EOF
 "---------------------------
 " tree sitter config
@@ -232,21 +217,8 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 "---------------------------
-"C++/typescript compiler. using clang++ (quickrun)
+" Sniprun
 "---------------------------
-let g:quickrun_config = {}
-let g:quickrun_config["cpp"] = {"type": "cpp/clang++11"}
-let g:quickrun_config['typescript'] = { 'type' : 'typescript/tsc' }
-let g:quickrun_config["cpp/clang++11"] = {
-      \ "cmdopt": "--std=c++11 --stdlib=libc++",
-      \ "type": "cpp/clang++"
-      \ }
-let g:quickrun_config['typescript/tsc'] = {
-      \   'command': 'tsc',
-      \   'exec': ['%c --target esnext --module commonjs %o %s', 'node %s:r.js'],
-      \   'tempfile': '%{tempname()}.ts',
-      \   'hook/sweep/files': ['%S:p:r.js'],
-      \ }
 "---------------------------
 " status lualine
 "---------------------------
@@ -327,6 +299,18 @@ require("indent_blankline").setup {
 -- vim.opt.listchars:append("eol:↴")
 EOF
 "---------------------------
+" Sniprun
+"---------------------------
+lua << EOF
+require'sniprun'.setup({
+display = {"NvimNotify"},
+})
+
+require("notify").setup({
+  background_colour = "#000000",
+})
+EOF
+"---------------------------
 " vista ctags
 "---------------------------
 let g:vista_default_executive = 'ctags'
@@ -336,9 +320,12 @@ autocmd VimEnter * Vista
 "---------------------------
 " vim-go
 "---------------------------
-let g:go_metalinter_command='golangci-lint run'
+" let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
 autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
