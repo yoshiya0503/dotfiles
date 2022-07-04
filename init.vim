@@ -316,11 +316,11 @@ EOF
 let g:vista_default_executive = 'ctags'
 let g:vista_stay_on_open = 0
 let g:vista_finder_alternative_executives = 'nvim_lsp'
-autocmd VimEnter * Vista
+" autocmd VimEnter * Vista
 "---------------------------
 " vim-go
 "---------------------------
-" let g:go_metalinter_command='golangci-lint run'
+let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
