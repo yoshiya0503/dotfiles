@@ -5,6 +5,10 @@
 "---------------------------
 "---------------------------
 " vim-plug package manager
+" TODO
+" 大きいtsファイルに補完が効かない
+" perttierが効かない
+" sniprunが動かない
 "---------------------------
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neovim/nvim-lspconfig' " LSP
@@ -316,7 +320,7 @@ EOF
 let g:vista_default_executive = 'ctags'
 let g:vista_stay_on_open = 0
 let g:vista_finder_alternative_executives = 'nvim_lsp'
-" autocmd VimEnter * Vista
+autocmd VimEnter * Vista
 "---------------------------
 " vim-go
 "---------------------------
@@ -324,8 +328,8 @@ let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
-autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+" autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" set tabstop=4
+" set softtabstop=4
+" set shiftwidth=4
