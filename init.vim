@@ -7,6 +7,7 @@
 " vim-plug package manager
 " TODO
 " 大きいtsファイルに補完が効かない
+" Troubleが重い
 " perttierが効かない
 " sniprunが動かない
 "---------------------------
@@ -284,8 +285,8 @@ lua << EOF
   require("trouble").setup {
     padding = false,
     height = 6,
-    auto_open = true, -- automatically open the list when you have diagnostics
-    auto_close = true, -- automatically close the list when you have no diagnostics
+    -- auto_open = true, -- automatically open the list when you have diagnostics
+    -- auto_close = true, -- automatically close the list when you have no diagnostics
   }
 EOF
 nnoremap TT <cmd>TroubleToggle<cr>
