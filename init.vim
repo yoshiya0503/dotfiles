@@ -6,7 +6,6 @@
 "---------------------------
 " vim-plug package manager
 " TODO
-" 大きいtsファイルに補完が効かない
 " Troubleが重い
 " perttierが効かない
 " sniprunが動かない
