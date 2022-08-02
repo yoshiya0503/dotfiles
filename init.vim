@@ -328,8 +328,8 @@ let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
-" autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
-" autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" set tabstop=4
+" set softtabstop=4
+" set shiftwidth=4
