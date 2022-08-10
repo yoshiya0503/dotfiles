@@ -6,6 +6,7 @@
 "---------------------------
 " vim-plug package manager
 " TODO
+" 大きいtsファイルに補完が効かない
 " Troubleが重い
 " perttierが効かない
 " sniprunが動かない
@@ -308,12 +309,16 @@ EOF
 lua << EOF
 require'sniprun'.setup({
 display = {"NvimNotify"},
+display_options = {
+    notification_timeout = 1
+  },
 })
 
 require("notify").setup({
   background_colour = "#000000",
 })
 EOF
+vmap f <Plug>SnipRun
 "---------------------------
 " vista ctags
 "---------------------------
@@ -328,8 +333,8 @@ let g:go_metalinter_command='golangci-lint run'
 "---------------------------
 " indent
 "---------------------------
-autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
-" set tabstop=4
-" set softtabstop=4
-" set shiftwidth=4
+" autocmd! FileType typescript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+" autocmd! FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 softtabstop=4
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
