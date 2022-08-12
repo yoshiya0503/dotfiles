@@ -7,20 +7,19 @@
 " vim-plug package manager
 " TODO
 " 大きいtsファイルに補完が効かない
-" Troubleが重い
-" perttierが効かない
-" sniprunが動かない
 "---------------------------
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neovim/nvim-lspconfig' " LSP
-Plug 'williamboman/nvim-lsp-installer' " LSP installer
+Plug 'williamboman/mason.nvim' " LSP package manager
+Plug 'williamboman/mason-lspconfig.nvim' " LSP config bridge
+Plug 'jose-elias-alvarez/null-ls.nvim' " LSP improve
+Plug 'yoshiya0503/lspsaga.nvim', { 'branch': 'main' } "completion UI
 Plug 'hrsh7th/nvim-cmp' " completion LSP
 Plug 'hrsh7th/cmp-nvim-lsp' " completion LSP source
 Plug 'hrsh7th/cmp-buffer' " completion LSP file buffer
 Plug 'hrsh7th/cmp-path' " completion LSP file path
 Plug 'hrsh7th/cmp-cmdline' " completion LSP vim command
-Plug 'onsails/lspkind.nvim' " completion Icon
-Plug 'liuchengxu/vista.vim' " ctags outline
+Plug 'onsails/lspkind.nvim' " completion with Icon
 Plug 'L3MON4D3/LuaSnip' " code snippet
 Plug 'saadparwaiz1/cmp_luasnip' " code snippet to cmp
 Plug 'rafamadriz/friendly-snippets' " snippet set
@@ -28,18 +27,22 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax hilight
 Plug 'kyazdani42/nvim-web-devicons' " icon
 Plug 'kyazdani42/nvim-tree.lua' " filer
 Plug 'rcarriga/nvim-notify' " notification
-Plug 'lukas-reineke/indent-blankline.nvim' " show indent
 Plug 'folke/trouble.nvim' " trouble shooting
-Plug 'editorconfig/editorconfig-vim' " editor config
 Plug 'nvim-lualine/lualine.nvim' " status line
-Plug 'michaelb/sniprun', {'do': 'bash install.sh 1 >> /tmp/log 2>&1'}
+Plug 'lukas-reineke/indent-blankline.nvim' " show indent
+Plug 'windwp/nvim-autopairs' " bracket pair
+Plug 'windwp/nvim-ts-autotag' " bracket tag
+Plug 'michaelb/sniprun', {'do': 'bash install.sh 1 >> /tmp/log 2>&1'} " quick code run
+Plug 'norcalli/nvim-colorizer.lua' " color code visibility
+Plug 'editorconfig/editorconfig-vim' " editor config
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' } " ts code formatter
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } " go
+Plug 'tpope/vim-fugitive' " git
+Plug 'EdenEast/nightfox.nvim' "color_schema
 Plug 'joshdick/onedark.vim' " color_scheme
 Plug 'rebelot/kanagawa.nvim' " color_scheme
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'tomasr/molokai' " color_scheme
-Plug 'tpope/vim-fugitive' " git
 call plug#end()
 "---------------------------
 " vim original conf
@@ -92,15 +95,18 @@ nnoremap th gT
 " colorscheme
 "---------------------------
 lua <<EOF
--- vim.g.tokyonight_style = "night"
--- vim.g.tokyonight_transparent_sidebar = true
+vim.g.tokyonight_style = "storm"
+vim.g.tokyonight_transparent_sidebar = true
+vim.g.tokyonight_transparent = true
+vim.g.tokyonight_lualine_bold = true
 EOF
 syntax enable " syntax highlight
 set background=dark
 set termguicolors
-" colorscheme tokyonight
+colorscheme tokyonight
 " colorscheme kanagawa
-colorscheme molokai
+" colorscheme molokai
+" colorscheme nightfox
 highlight LineNr guifg=lime guibg=NONE
 highlight VertSplit guifg=lime guibg=NONE
 highlight QuickFixLine ctermbg=NONE guibg=NONE
@@ -112,37 +118,52 @@ highlight NormalNC ctermbg=NONE guibg=NONE guifg=None
 "---------------------------
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
-lua <<EOF
+lua << EOF
+-- メッセージアイコン
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 local on_attach = function(client, bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  -- LSP sagaの設定を優先する
+  -- lspsagaのcode outline初回起動
+  -- vim.api.nvim_exec("LSoutline", false)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local lspconfig = require'lspconfig'
-local lsp_installer = require "nvim-lsp-installer"
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-lsp_installer.setup {
-  automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-  ui = {
-    icons = {
-      server_installed = "✓",
-      server_pending = "➜",
-      server_uninstalled = "✗"
-    }
-  }
-}
-for _, server in ipairs(lsp_installer.get_installed_servers()) do
-  lspconfig[server.name].setup {
+local mason = require('mason')
+local mason_lspconfig = require('mason-lspconfig')
+mason.setup({
+   automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+   ui = {
+     icons = {
+       package_installed = "✓",
+       package_pending = "➜",
+       package_uninstalled = "✗"
+     }
+   }
+ })
+mason_lspconfig.setup_handlers({ function(server_name)
+  lspconfig[server_name].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
-end
+end })
+
+-- LSP saga
+require 'lspsaga'.init_lsp_saga()
+vim.keymap.set("n", "cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+vim.keymap.set("n", "gd", "<cmd>Lspsaga preview_definition<CR>", { silent = true })
+vim.keymap.set("n", "gs", "<Cmd>Lspsaga signature_help<CR>", { silent = true })
+vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true })
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 EOF
 "---------------------------
 " completion config
@@ -218,12 +239,9 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = true,
     disable = {"python"},
-  }
+  },
 }
 EOF
-"---------------------------
-" Sniprun
-"---------------------------
 "---------------------------
 " status lualine
 "---------------------------
@@ -285,8 +303,9 @@ lua << EOF
   require("trouble").setup {
     padding = false,
     height = 6,
-    -- auto_open = true, -- automatically open the list when you have diagnostics
-    -- auto_close = true, -- automatically close the list when you have no diagnostics
+    icons = true,
+    auto_open = true, -- automatically open the list when you have diagnostics
+    auto_close = true, -- automatically close the list when you have no diagnostics
   }
 EOF
 nnoremap TT <cmd>TroubleToggle<cr>
@@ -295,13 +314,9 @@ nnoremap TT <cmd>TroubleToggle<cr>
 "---------------------------
 lua <<EOF
 require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
     show_current_context = true,
     show_current_context_start = true,
 }
--- vim.opt.list = true
--- vim.opt.listchars:append("space:⋅")
--- vim.opt.listchars:append("eol:↴")
 EOF
 "---------------------------
 " Sniprun
@@ -320,12 +335,11 @@ require("notify").setup({
 EOF
 vmap f <Plug>SnipRun
 "---------------------------
-" vista ctags
+" utitily tag, autopair bracket, color code visible
 "---------------------------
-let g:vista_default_executive = 'ctags'
-let g:vista_stay_on_open = 0
-let g:vista_finder_alternative_executives = 'nvim_lsp'
-autocmd VimEnter * Vista
+lua require("nvim-autopairs").setup {}
+lua require("nvim-ts-autotag").setup {}
+lua require'colorizer'.setup()
 "---------------------------
 " vim-go
 "---------------------------
