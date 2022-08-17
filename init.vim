@@ -1,11 +1,11 @@
 "---------------------------
 " @title nvim/init.vim
 " @author Yoshiya Ito
-" @version 5.0.0
+" @version 6.0.0
+" TODO outlineが起動できない
 "---------------------------
 "---------------------------
 " vim-plug package manager
-" TODO outlineが起動できない
 "---------------------------
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neovim/nvim-lspconfig' " LSP
@@ -13,7 +13,6 @@ Plug 'williamboman/mason.nvim' " LSP package manager
 Plug 'williamboman/mason-lspconfig.nvim' " LSP config bridge
 Plug 'jose-elias-alvarez/null-ls.nvim' " LSP improve
 Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' } "completion UI
-Plug 'simrat39/symbols-outline.nvim' " code outline
 Plug 'hrsh7th/nvim-cmp' " completion LSP
 Plug 'hrsh7th/cmp-nvim-lsp' " completion LSP source
 Plug 'hrsh7th/cmp-buffer' " completion LSP file buffer
@@ -28,28 +27,56 @@ Plug 'kyazdani42/nvim-web-devicons' " icon
 Plug 'kyazdani42/nvim-tree.lua' " filer
 Plug 'rcarriga/nvim-notify' " notification
 Plug 'folke/trouble.nvim' " trouble shooting
+Plug 'michaelb/sniprun', {'do': 'bash install.sh 1 >> /tmp/log 2>&1'} " quick code run
 Plug 'nvim-lualine/lualine.nvim' " status line
 Plug 'lukas-reineke/indent-blankline.nvim' " show indent
-Plug 'windwp/nvim-autopairs' " bracket pair
-Plug 'windwp/nvim-ts-autotag' " bracket tag
-Plug 'michaelb/sniprun', {'do': 'bash install.sh 1 >> /tmp/log 2>&1'} " quick code run
 Plug 'norcalli/nvim-colorizer.lua' " color code visibility
 Plug 'editorconfig/editorconfig-vim' " editor config
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' } " ts code formatter
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } " go
-Plug 'tpope/vim-fugitive' " git
 Plug 'EdenEast/nightfox.nvim' "color_schema
-Plug 'joshdick/onedark.vim' " color_scheme
 Plug 'rebelot/kanagawa.nvim' " color_scheme
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-Plug 'tomasr/molokai' " color_scheme
 call plug#end()
 
 lua << EOF
+-- vim.cmd[[packadd packer.nvim]]
+-- require('packer').startup(function(use)
+-- use { 'wbthomason/packer.nvim' } -- package manager
+-- use { 'neovim/nvim-lspconfig' } -- LSP
+-- use { 'williamboman/mason.nvim' } -- LSP package manager
+-- use { 'williamboman/mason-lspconfig.nvim' } -- LSP config bridge
+-- use { 'jose-elias-alvarez/null-ls.nvim' } -- LSP improve
+-- use { 'glepnir/lspsaga.nvim', branch = 'main' } -- LSP UI/Code outline
+-- use { 'hrsh7th/nvim-cmp' } -- completion LSP
+-- use { 'hrsh7th/cmp-nvim-lsp' } -- completion LSP source
+-- use { 'hrsh7th/cmp-buffer' } -- completion LSP file buffer
+-- use { 'hrsh7th/cmp-path' } -- completion LSP file path
+-- use { 'hrsh7th/cmp-cmdline' } -- completion LSP vim command
+-- use { 'onsails/lspkind.nvim' } -- completion with Icon
+-- use { 'L3MON4D3/LuaSnip' } -- code snippet
+-- use { 'saadparwaiz1/cmp_luasnip' } -- code snippet to cmp
+-- use { 'rafamadriz/friendly-snippets' } -- snippet set
+-- use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'} -- syntax hilight
+-- use { 'kyazdani42/nvim-web-devicons' } -- icon
+-- use { 'kyazdani42/nvim-tree.lua' } -- filer
+-- use { 'rcarriga/nvim-notify' } -- notification
+-- use { 'folke/trouble.nvim' } -- trouble shooting
+-- use { 'michaelb/sniprun', run = 'bash install.sh 1 >> /tmp/log 2>&1' } -- quick code run
+-- use { 'nvim-lualine/lualine.nvim' } -- status line
+-- use { 'lukas-reineke/indent-blankline.nvim' } -- show indent
+-- use { 'norcalli/nvim-colorizer.lua' } -- color code visibility
+-- use { 'editorconfig/editorconfig-vim' } -- editor config
+-- use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' } -- ts code formatter
+-- use { 'EdenEast/nightfox.nvim' } -- color_schema
+-- use { 'rebelot/kanagawa.nvim' } -- color_scheme
+-- use { 'folke/tokyonight.nvim', branch= 'main' } -- colorscheme
+-- -- Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' } " go
+-- end)
 
 -- vim grobal config
 vim.o.title = true -- show title
-vim.o.number = true -- show number
+-- vim.o.number = true -- show number
 vim.o.writebackup = false -- nobackup
 vim.o.swapfile = false -- noswapfile
 vim.o.display = 'uhex'  -- show hex
@@ -68,8 +95,10 @@ vim.o.smartindent = true  -- smart indent system
 vim.o.showmatch = true    -- show ()[]{}match
 vim.o.smartcase = true    -- search smart case
 vim.wo.wrap = false       -- nowrap
+vim.opt.clipboard:append{'unnamedplus'} -- clipboad
 vim.opt.fillchars = {     -- vert sign
   vert = " ",
+  eob = " ",
 }
 
 -- remove traling white space
@@ -80,7 +109,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 -- key remap
 vim.keymap.set('i', 'jj', '<esc>', { silent = true})
-vim.keymap.set('n', 's', '<Nop>', { silent = true})
 vim.keymap.set('n', 's', '<Nop>', { silent = true})
 vim.keymap.set('n', 'ss', ':<C-u>sp<CR>', { silent = true})
 vim.keymap.set('n', 'sv', ':<C-u>vs<CR>', { silent = true})
@@ -109,12 +137,7 @@ vim.cmd[[colorscheme tokyonight]]
 -- vim.cmd[[colorscheme kanagawa]]
 -- vim.cmd[[colorscheme molokai]]
 -- vim.cmd[[colorscheme nightfox]]
--- vim.highlight.create('Normal', {ctermbg=0, guifg=0, guibg=0}, false)
--- vim.highlight.create('NormalNC', {ctermbg=0, guifg=0, guibg=0}, false)
 vim.highlight.create('LineNr', {ctermbg=0, guifg='lime', guibg=0}, false)
--- vim.highlight.create('VertSplit', {ctermbg=0, guifg='lime', guibg=0}, false)
--- vim.highlight.create('SignColumn', {ctermbg=0, guibg=0}, false)
--- vim.highlight.create('QuickFixLine', {ctermbg=0, guibg=0}, false)
 
 -- Icon/Sign Settings
 for type, icon in pairs({Error = " ", Warn = " ", Hint = " ", Info = " "}) do
@@ -303,9 +326,7 @@ require("notify").setup({
 })
 
 -- utitily config
--- tag, autopair bracket, color code visible, indent visible
-require("nvim-autopairs").setup {}
-require("nvim-ts-autotag").setup {}
+-- color code visible, indent visible
 require'colorizer'.setup()
 require("indent_blankline").setup {
     show_current_context = true,
