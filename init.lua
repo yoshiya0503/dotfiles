@@ -48,12 +48,12 @@ vim.o.display = 'uhex'  -- show hex
 vim.o.signcolumn = "yes" --signcolumn
 vim.o.expandtab = true -- tab to space
 vim.o.smarttab = true -- smarttab
--- vim.o.tabstop = 4
--- vim.o.softtabstop = 4
--- vim.o.shiftwidth = 4
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
-vim.o.shiftwidth = 2
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+-- vim.o.tabstop = 2
+-- vim.o.softtabstop = 2
+-- vim.o.shiftwidth = 2
 vim.o.cindent = true      -- c interigent indent
 vim.o.autoindent = true   -- autoindent !neovim default
 vim.o.smartindent = true  -- smart indent system
@@ -113,7 +113,34 @@ end
 
 -- callback
 local on_attach = function(client, bufnr)
+  -- auto formatter
   local opts = { noremap = true, silent = true, buffer = bufnr }
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = { "*.go" },
+    callback = function()
+      vim.lsp.buf.formatting_sync()
+    end,
+  })
+
+  -- auto import (go)
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = { "*.go" },
+    callback = function()
+      local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding())
+      params.context = {only = {"source.organizeImports"}}
+
+      local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 100)
+      for _, res in pairs(result or {}) do
+        for _, r in pairs(res.result or {}) do
+          if r.edit then
+            vim.lsp.util.apply_workspace_edit(r.edit, vim.lsp.util._get_offset_encoding())
+          else
+            vim.lsp.buf.execute_command(r.command)
+          end
+        end
+      end
+    end,
+  })
   -- lspsagaのcode outline初回起動
   -- vim.api.nvim_exec("LSoutline", false)
 end
@@ -137,6 +164,30 @@ require('mason-lspconfig').setup_handlers({function(server_name)
     capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   }
 end })
+
+-- null-ls config
+-- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+-- require("null-ls").setup({
+--     sources = {
+--         require("null-ls").builtins.formatting.stylua,
+--         require("null-ls").builtins.diagnostics.eslint,
+--         require("null-ls").builtins.completion.spell,
+--         require("null-ls").builtins.formatting.gofumpt,
+--         require("null-ls").builtins.formatting.goimports,
+--     },
+--     on_attach = function(client, bufnr)
+--         if client.supports_method("textDocument/formatting") then
+--             vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+--             vim.api.nvim_create_autocmd("BufWritePre", {
+--                 group = augroup,
+--                 buffer = bufnr,
+--                 callback = function()
+--                    vim.lsp.buf.formatting_sync()
+--                 end,
+--             })
+--         end
+--     end,
+-- })
 
 -- lspsaga config
 require 'lspsaga'.init_lsp_saga({
@@ -307,6 +358,5 @@ require("indent_blankline").setup {
 }
 
 -- vim-go and prettier
-vim.g['go_metalinter_command'] = 'golangci-lint run'
 vim.g['prettier#autoformat'] = 1
 vim.g['prettier#autoformat_require_pragma'] = 0
